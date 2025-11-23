@@ -1,496 +1,497 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>SSchoolBio — Blue Dark (50 câu) — Role: Teacher Gate</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --blue1:#001428;
-  --blue2:#002B55;
-  --accent:#00A8FF;
-  --accent2:#007BFF;
-  --card:#07192b;
-  --text:#EAF8FF;
-  --muted:#9fbcd6;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;font-family:'Poppins',sans-serif;
-  background:linear-gradient(135deg,var(--blue1),var(--blue2));
-  color:var(--text);
-  min-height:100vh;
-}
-header{
-  background:linear-gradient(90deg,#003459,#0077cc);
-  padding:18px 0;
-  box-shadow:0 6px 18px rgba(0,0,0,0.35);
-}
-.container{max-width:1100px;margin:20px auto;padding:18px;background:rgba(255,255,255,0.03);border-radius:12px}
-.nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-button{cursor:pointer;border:0;padding:10px 14px;border-radius:8px;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;font-weight:600}
-button.ghost{background:transparent;color:var(--accent);border:1px solid rgba(255,255,255,0.08)}
-button.small{padding:6px 8px;font-size:13px}
-.row{display:flex;gap:14px;flex-wrap:wrap}
-.col{flex:1;min-width:300px}
-.card{padding:14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.12));border:1px solid rgba(255,255,255,0.04);margin-bottom:12px;box-shadow:0 6px 20px rgba(0,0,0,0.45)}
-label{display:block;margin-top:8px;font-size:13px;color:var(--muted)}
-input[type=text],select,textarea,input[type=number]{width:100%;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);color:var(--text)}
-.q-list .q{border-left:4px solid var(--accent);padding:10px;margin:8px 0;border-radius:6px;background:rgba(0,0,0,0.18)}
-.small{font-size:13px;color:var(--muted)}
-.bar{height:12px;background:#07243a;border-radius:8px;overflow:hidden}
-.bar > i{display:block;height:100%;background:linear-gradient(90deg,#00A8FF,#66D1FF)}
-.hidden{display:none}
-.footer{font-size:14px;color:var(--muted);text-align:center;padding:16px;margin-top:20px;border-top:1px solid rgba(255,255,255,0.03);background:rgba(255,255,255,0.01);border-radius:6px}
-.footer strong{color:var(--accent);text-shadow:0 0 6px rgba(0,168,255,0.15);font-weight:700}
-pre{white-space:pre-wrap;background:rgba(255,255,255,0.03);padding:10px;border-radius:8px;border:1px dashed rgba(255,255,255,0.04);color:#bfe9ff}
-#modal{position:fixed;right:20px;bottom:20px;width:320px;background:#012033;padding:12px;border-radius:8px;border-left:4px solid var(--accent);box-shadow:0 6px 24px rgba(0,0,0,0.6);display:none}
-#loginModal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:9999;display:none}
-#loginModal .box{background:linear-gradient(180deg,#071427,#0f2742);padding:20px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);width:360px;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
-.label-locked{color:#ffbaba;background:rgba(255,80,80,0.06);padding:8px;border-radius:6px;margin-top:8px;border:1px solid rgba(255,80,80,0.08)}
-.teacher-controls.locked *{pointer-events:none;opacity:0.45}
-.top-right {position: absolute; right: 28px; top: 22px; color: rgba(255,255,255,0.85)}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Better Me - GenZ Edition</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts hiện đại, trẻ trung -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Be+Vietnam+Pro:wght@400;500;700;900&display=swap');
+
+        :root {
+            /* Palette Gen Z năng động */
+            --primary: #7F5AF0;    /* Tím sáng */
+            --secondary: #2CB67D;  /* Xanh lá tươi */
+            --accent: #FF8906;     /* Cam nổi bật */
+            --text-main: #FFFFFE;
+            --text-sub: #94A1B2;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            /* Nền Gradient động Cyberpop */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Typography */
+        h1, h2, h3, .brand-font {
+            font-family: 'Chakra Petch', sans-serif;
+        }
+
+        /* Glassmorphism Cards - Sáng hơn, hiện đại hơn */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border-radius: 20px;
+        }
+
+        /* 3D Flip Fix */
+        .perspective-1000 { perspective: 1500px; }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .card-inner.flipped { transform: rotateY(180deg); }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .card-back { transform: rotateY(180deg); }
+
+        /* Modern Buttons */
+        .btn-modern {
+            background: white;
+            color: #e73c7e;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-modern:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: #fff;
+            color: #23a6d5;
+        }
+        .btn-modern:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.5); border-radius: 4px; }
+    </style>
 </head>
 <body>
-<header>
-  <div class="container" style="display:flex;justify-content:space-between;align-items:center;background:transparent;padding:0">
-    <div>
-      <h2 style="margin:0">SSchoolBio — MVP (Sinh học 11)</h2>
-      <div class="small">Ngân hàng câu hỏi • Lưu cục bộ • Demo</div>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <button id="btnExport" class="small ghost">Export JSON</button>
-      <button id="btnImport" class="small">Import JSON</button>
-      <input id="fileInput" type="file" accept=".json" style="display:none">
-    </div>
-  </div>
-</header>
+    <div id="root"></div>
 
-<main class="container">
-  <div class="nav">
-    <button id="nav-home">Home</button>
-    <button id="nav-teacher" class="ghost">Teacher</button>
-    <button id="nav-student" class="ghost">Student</button>
-    <button id="btn-reset" class="ghost small">Reset dữ liệu</button>
-    <div style="flex:1"></div>
-    <div id="roleBox" class="small top-right"></div>
-  </div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-  <div id="view-home" class="card">
-    <h3>Giới thiệu</h3>
-    <p class="small">Ứng dụng prototype đánh giá năng lực Sinh học 11 (dựa trên tài liệu bạn cung cấp). Chọn "Teacher" để quản lý ngân hàng câu hỏi / sinh đề; "Student" để làm bài.</p>
-    <div style="margin-top:10px"><button id="seed" class="small">Tải dữ liệu mẫu (50 câu)</button></div>
-  </div>
+        // --- ICONS ---
+        const Icon = ({ path, size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                {path}
+            </svg>
+        );
 
-  <!-- TEACHER -->
-  <div id="view-teacher" class="hidden">
-    <div id="teacherLocked" class="card">
-      <!-- This will be replaced/hidden when teacher logged in -->
-      <h4>Khu vực Giáo viên</h4>
-      <p class="small">Chỉ giáo viên mới được phép xem và quản lý ngân hàng câu hỏi. Vui lòng <strong>đăng nhập</strong> để tiếp tục.</p>
-      <div style="margin-top:10px">
-        <button id="openLogin" class="small">Đăng nhập Giáo viên</button>
-      </div>
-    </div>
+        const Icons = {
+            Brain: <Icon path={<><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></>} />,
+            Target: <Icon path={<><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></>} />,
+            Zap: <Icon path={<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>} />,
+            Users: <Icon path={<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>} />,
+            ChevronRight: <Icon path={<path d="m9 18 6-6-6-6"/>} />,
+            RotateCcw: <Icon path={<><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></>} />,
+            MessageSquare: <Icon path={<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>} />,
+            Lock: <Icon path={<><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>} />,
+            Unlock: <Icon path={<><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></>} />,
+            Clock: <Icon path={<><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>} />,
+            Plus: <Icon path={<><path d="M5 12h14"/><path d="M12 5v14"/></>} />
+        };
 
-    <div id="teacherArea" class="hidden teacher-controls">
-      <div class="row">
-        <div class="col">
-          <div class="card">
-            <h4>Thêm / Chỉnh sửa câu hỏi</h4>
-            <label>Chủ đề</label><input id="q_topic" type="text" placeholder="vd: Quang hợp">
-            <label>Loại</label>
-            <select id="q_type"><option value="mcq">Trắc nghiệm (MCQ)</option><option value="tf">Đúng/Sai</option><option value="essay">Tự luận</option></select>
-            <label>Nội dung câu hỏi</label><textarea id="q_text" rows="3"></textarea>
-            <div id="mcq_area">
-              <label>Đáp án A</label><input id="opt_a" type="text">
-              <label>Đáp án B</label><input id="opt_b" type="text">
-              <label>Đáp án C</label><input id="opt_c" type="text">
-              <label>Đáp án D</label><input id="opt_d" type="text">
-              <label>Chỉ số đáp án đúng (0..3)</label><input id="opt_correct" type="number" min="0" max="3" value="0">
-            </div>
-            <label>Mức độ</label>
-            <select id="q_level"><option>Nhận biết</option><option>Thông hiểu</option><option>Vận dụng</option></select>
-            <div style="margin-top:10px">
-              <button id="add_q">Thêm câu hỏi</button>
-              <button id="clear_form" class="ghost small">Xóa form</button>
-            </div>
-          </div>
+        // DATA
+        const quizData = [
+            { id: 1, hint: "Nhà phát minh bóng đèn điện. Thử sai 10.000 lần.", answer: "Thomas Edison", desc: "Thiên tài là 1% cảm hứng và 99% mồ hôi." },
+            { id: 2, hint: "Rapper 'tử tế'. Từng làm công nhân vệ sinh 7 năm.", answer: "Đen Vâu", desc: "Chủ nhân hit 'Mang tiền về cho mẹ'." },
+            { id: 3, hint: "Sáng lập Apple. iPhone. 'Stay hungry, stay foolish'.", answer: "Steve Jobs", desc: "Huyền thoại công nghệ." },
+            { id: 4, hint: "Cầu thủ số 7. Biểu tượng của kỷ luật và nỗ lực.", answer: "Cristiano Ronaldo", desc: "CR7 - Cỗ máy ghi bàn." },
+            { id: 5, hint: "Tỷ phú sáng lập Microsoft. Bỏ học Harvard.", answer: "Bill Gates", desc: "Người thay đổi thế giới máy tính." },
+            { id: 6, hint: "Mẹ đẻ Harry Potter. Từng là mẹ đơn thân nghèo khó.", answer: "J.K. Rowling", desc: "Từ trợ cấp xã hội đến tỷ phú." },
+            { id: 7, hint: "Thiên tài bóng đá Argentina. Vô địch World Cup.", answer: "Lionel Messi", desc: "El Pulga - Phép màu trên sân cỏ." },
+            { id: 8, hint: "Ca sĩ 'Lạc Trôi'. Sếp của Sky.", answer: "Sơn Tùng M-TP", desc: "Ngôi sao V-Pop hàng đầu." },
+            { id: 9, hint: "Quả táo rơi trúng đầu. Định luật Vạn vật hấp dẫn.", answer: "Isaac Newton", desc: "Nhà vật lý vĩ đại." },
+            { id: 10, hint: "Hoa hậu Hoàn vũ VN. Người dân tộc Ê-đê.", answer: "H'Hen Niê", desc: "Từ cô gái hái cà phê đến Top 5 thế giới." }
+        ];
 
-          <div class="card">
-            <h4>Tạo đề tự động</h4>
-            <label>Số câu MCQ</label><input id="gen_mcq" type="number" value="8" min="0">
-            <label>Số câu Essay</label><input id="gen_essay" type="number" value="1" min="0">
-            <label>Chủ đề ưu tiên (để trống = toàn bộ)</label><input id="gen_topic" type="text">
-            <div style="margin-top:8px">
-              <button id="gen_btn">Sinh đề</button>
-              <button id="save_gen" class="ghost small" disabled>Lưu đề</button>
-            </div>
-            <pre id="gen_preview" class="small"></pre>
-          </div>
-        </div>
+        const situationData = [
+            { id: 1, title: "HỒ SƠ #01", content: "Minh muốn vào CLB Tiếng Anh nhưng sợ nói sai bị cười. Đã đăng ký rồi rút đơn 2 lần.", theme: "TỰ TIN", color: "text-orange-300" },
+            { id: 2, title: "HỒ SƠ #02", content: "Lan thông minh nhưng 'nước đến chân mới nhảy'. Luôn làm bài tập vào phút chót.", theme: "QUẢN LÝ THỜI GIAN", color: "text-teal-300" },
+            { id: 3, title: "HỒ SƠ #03", content: "Hùng rất dễ nổi nóng khi bị trêu chọc, dẫn đến xô xát và mất bạn bè.", theme: "CẢM XÚC", color: "text-red-300" },
+            { id: 4, title: "HỒ SƠ #04", content: "Hoa nghiện TikTok/Facebook thâu đêm. Đi học uể oải, mất tập trung.", theme: "KỶ LUẬT", color: "text-purple-300" }
+        ];
 
-        <div class="col">
-          <div class="card">
-            <h4>Ngân hàng câu hỏi</h4>
-            <div id="q_list" class="q-list small">(chưa có)</div>
-          </div>
+        // COMPONENTS
+        const App = () => {
+            const [phase, setPhase] = useState('welcome');
+            const [scores, setScores] = useState({ 1: 0, 2: 0, 3: 0, 4: 0 });
+            
+            const [currentQuiz, setCurrentQuiz] = useState(0);
+            const [isFlipped, setIsFlipped] = useState(false);
+            const [currentSituation, setCurrentSituation] = useState(0);
+            const [isSituationFlipped, setIsSituationFlipped] = useState(false);
+            const [timeLeft, setTimeLeft] = useState(60);
+            const [isRunning, setIsRunning] = useState(false);
+            const [notes, setNotes] = useState([]);
+            const [newNoteName, setNewNoteName] = useState("");
+            const [newNoteContent, setNewNoteContent] = useState("");
 
-          <div class="card">
-            <h4>Đề thi đã lưu</h4>
-            <div id="quiz_list" class="small">(chưa có)</div>
-          </div>
+            useEffect(() => {
+                let interval;
+                if (isRunning && timeLeft > 0) interval = setInterval(() => setTimeLeft(t => t - 1), 1000);
+                else if (timeLeft === 0) setIsRunning(false);
+                return () => clearInterval(interval);
+            }, [isRunning, timeLeft]);
 
-          <div class="card">
-            <h4>Thống kê</h4>
-            <div id="teacher_stats" class="small">(chưa có kết quả)</div>
-            <div style="margin-top:10px"><button id="btnLogout" class="ghost small">Đăng xuất</button></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            const updateScore = (team, delta) => setScores(p => ({...p, [team]: Math.max(0, p[team] + delta)}));
 
-  <!-- STUDENT -->
-  <div id="view-student" class="hidden">
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <h4>Học sinh làm bài</h4>
-          <label>Tên</label><input id="stu_name" type="text" placeholder="Nhập tên học sinh...">
-          <label>Chọn đề</label>
-          <select id="select_quiz"></select>
-          <div style="margin-top:8px">
-            <button id="start_quiz">Bắt đầu</button>
-            <button id="sample_quiz" class="ghost small">Lấy đề mẫu</button>
-          </div>
-        </div>
+            // --- RENDERERS ---
 
-        <div id="take_area" class="card hidden">
-          <h4 id="take_title">Bài làm</h4>
-          <div id="question_box"></div>
-          <div style="margin-top:10px">
-            <button id="prev_btn" class="ghost small">Trước</button>
-            <button id="next_btn" class="ghost small">Tiếp</button>
-            <button id="submit_quiz">Nộp bài</button>
-          </div>
-        </div>
-      </div>
+            const ScoreBoard = () => (
+                <div className="flex justify-center gap-4 mb-6 flex-wrap">
+                    {[1, 2, 3, 4].map(id => (
+                        <div key={id} className="glass-card p-3 rounded-xl w-32 flex flex-col items-center border-t-2 border-white/40 shadow-lg">
+                            <span className="text-xs font-bold tracking-widest uppercase opacity-80">Đội {id}</span>
+                            <span className="text-3xl font-black my-1">{scores[id]}</span>
+                            <div className="flex gap-2">
+                                <button onClick={() => updateScore(id, -10)} className="w-6 h-6 rounded-full bg-white/20 hover:bg-red-500 hover:text-white flex items-center justify-center text-xs transition">-</button>
+                                <button onClick={() => updateScore(id, 10)} className="w-6 h-6 rounded-full bg-white/20 hover:bg-green-500 hover:text-white flex items-center justify-center text-xs transition">+</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
 
-      <div class="col">
-        <div class="card">
-          <h4>Kết quả gần đây</h4>
-          <div id="recent" class="small">(chưa có)</div>
-        </div>
+            const Timer = () => (
+                <div className="glass-card px-6 py-3 rounded-full flex items-center gap-6 mx-auto w-fit mb-6 shadow-xl border-2 border-white/30 bg-white/10 backdrop-blur-md">
+                    <div className="flex items-center gap-2">
+                        <div className={`p-2 rounded-full ${isRunning ? 'animate-spin' : ''} bg-white/20`}>{Icons.Clock}</div>
+                        <span className="text-3xl font-black w-16 text-center tabular-nums">{timeLeft}s</span>
+                    </div>
+                    <div className="h-8 w-px bg-white/30"></div>
+                    <div className="flex gap-2">
+                        <button onClick={() => setIsRunning(!isRunning)} className="px-4 py-1 rounded-full bg-white text-blue-600 font-bold hover:bg-blue-50 transition text-sm uppercase">
+                            {isRunning ? "Dừng" : "Bắt đầu"}
+                        </button>
+                        <button onClick={() => {setIsRunning(false); setTimeLeft(60);}} className="p-2 rounded-full bg-white/20 hover:bg-white/40 transition">
+                            {Icons.RotateCcw}
+                        </button>
+                    </div>
+                </div>
+            );
 
-        <div class="card">
-          <h4>Phân tích năng lực theo chủ đề</h4>
-          <div id="analysis" class="small">Chưa có dữ liệu</div>
-        </div>
-      </div>
-    </div>
-  </div>
+            // Welcome Screen
+            if (phase === 'welcome') return (
+                <div className="min-h-screen flex flex-col items-center justify-center relative z-10 p-4 text-center">
+                    <div className="glass-card p-12 rounded-3xl animate-float border-2 border-white/50 shadow-[0_0_50px_rgba(255,255,255,0.3)]">
+                        <div className="mb-6 flex justify-center">
+                            <div className="bg-white text-pink-500 p-6 rounded-full shadow-lg transform scale-125">
+                                {Icons.Target}
+                            </div>
+                        </div>
+                        <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-tight drop-shadow-sm">
+                            THE BETTER ME
+                        </h1>
+                        <h2 className="text-xl md:text-2xl font-medium mb-8 opacity-90 tracking-widest uppercase">
+                            Phiên bản hoàn hảo
+                        </h2>
+                        
+                        <button 
+                            onClick={() => setPhase('round1')}
+                            className="btn-modern px-12 py-5 text-xl w-full flex items-center justify-center gap-3"
+                        >
+                            Khởi động {Icons.Zap}
+                        </button>
+                    </div>
+                </div>
+            );
 
-  <div id="modal" class="hidden card" style="position:fixed;right:20px;bottom:20px;width:320px"></div>
-</main>
+            // Round 1
+            if (phase === 'round1') return (
+                <div className="min-h-screen p-4 flex flex-col relative z-10">
+                    <div className="flex justify-between items-center mb-6 px-4">
+                        <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-2 drop-shadow-md">
+                            {Icons.Brain} VÒNG 1: GIẢI MÃ
+                        </h2>
+                        <div className="text-sm font-bold bg-white/20 px-4 py-2 rounded-full border border-white/30">
+                            Câu {currentQuiz + 1}/{quizData.length}
+                        </div>
+                    </div>
 
-<footer class="footer">
-  ✨ <strong>Design by Fubao</strong> ✨ — Dữ liệu câu hỏi lấy từ Bài 12, Bài 13, Bài 14.
-</footer>
+                    <ScoreBoard />
+                    <Timer />
 
-<!-- Login Modal -->
-<div id="loginModal">
-  <div class="box">
-    <h3>Đăng nhập Giáo viên</h3>
-    <p class="small">Nhập mật khẩu giáo viên để xem và quản lý ngân hàng câu hỏi.</p>
-    <label>Mật khẩu</label>
-    <input id="loginPass" type="password" placeholder="Mật khẩu giáo viên">
-    <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end">
-      <button id="loginCancel" class="ghost small">Hủy</button>
-      <button id="loginOk" class="small">Đăng nhập</button>
-    </div>
-    <div style="margin-top:10px" class="small">Mật khẩu mặc định: <strong>teacher123</strong> (Bạn có thể thay đổi trong code)</div>
-  </div>
-</div>
+                    <div className="flex-1 flex flex-col items-center justify-center py-4">
+                        <div className="perspective-1000 w-full max-w-2xl h-80 cursor-pointer group" onClick={() => setIsFlipped(!isFlipped)}>
+                            <div className={`card-inner ${isFlipped ? 'flipped' : ''}`}>
+                                {/* FRONT */}
+                                <div className="card-front glass-card flex flex-col items-center justify-center p-8 bg-white/80 text-blue-900 shadow-2xl">
+                                    <div className="bg-blue-100 p-4 rounded-full mb-6 text-blue-600">
+                                        {Icons.Lock}
+                                    </div>
+                                    <h3 className="text-gray-500 text-sm tracking-widest mb-4 font-bold uppercase">Dữ kiện bí ẩn</h3>
+                                    <p className="text-2xl md:text-3xl font-bold text-center leading-relaxed drop-shadow-sm">
+                                        "{quizData[currentQuiz].hint}"
+                                    </p>
+                                    <div className="mt-8 text-xs text-blue-500 font-bold animate-bounce bg-blue-50 px-4 py-2 rounded-full">
+                                        NHẤN ĐỂ LẬT THẺ
+                                    </div>
+                                </div>
 
-<script>
-/* ===== Role-based access additions =====
-   - Simple teacher auth with password stored in code (default 'teacher123').
-   - Role persisted in localStorage key 'ssbio_role' = 'teacher' | 'student' | null
-   - Teacher-only UI elements disabled/hidden when not authenticated
-*/
+                                {/* BACK */}
+                                <div className="card-back glass-card flex flex-col items-center justify-center p-8 bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-2xl border-4 border-white/20">
+                                    <div className="absolute top-4 right-4 text-xs font-bold bg-white/20 px-2 py-1 rounded">ĐÁP ÁN</div>
+                                    <div className="bg-white/20 p-4 rounded-full mb-4">
+                                        {Icons.Unlock}
+                                    </div>
+                                    <h3 className="text-4xl md:text-5xl font-black mb-4 text-center drop-shadow-md text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-white">
+                                        {quizData[currentQuiz].answer}
+                                    </h3>
+                                    <p className="text-lg opacity-90 italic text-center border-t border-white/20 pt-4 w-full">
+                                        "{quizData[currentQuiz].desc}"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
 
-/* ===== Storage & initial data (PRELOADED = 50 câu, as before) ===== */
-const KEY = 'ssbio_v2';
-const ROLE_KEY = 'ssbio_role';
-let state = { questions: [], quizzes: [], results: [] };
-let isTeacher = (localStorage.getItem(ROLE_KEY) === 'teacher');
+                        <div className="mt-8 flex gap-4">
+                            <button 
+                                onClick={() => { setIsFlipped(false); setCurrentQuiz(Math.max(0, currentQuiz - 1)); }}
+                                disabled={currentQuiz === 0}
+                                className="px-6 py-3 rounded-full bg-white/20 hover:bg-white/30 font-bold transition disabled:opacity-30"
+                            >
+                                Câu trước
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    if (currentQuiz < quizData.length - 1) {
+                                        setIsFlipped(false);
+                                        setCurrentQuiz(currentQuiz + 1);
+                                    } else {
+                                        setPhase('round2');
+                                        setTimeLeft(60);
+                                        setIsRunning(false);
+                                    }
+                                }}
+                                className="px-8 py-3 rounded-full bg-white text-purple-700 font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition flex items-center gap-2"
+                            >
+                                {currentQuiz < quizData.length - 1 ? "Câu tiếp theo" : "Qua Vòng 2"} {Icons.ChevronRight}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
 
-/* Preloaded 50 câu (same as before) */
-const PRELOADED = [
-  /* (50 question objects identical to previous message) */
-  {id:'q1', topic:'Miễn dịch', type:'mcq', level:'Nhận biết',
-   question:'Miễn dịch là gì?', options:['Khả năng chống lại tác nhân gây bệnh','Quá trình tạo tế bào mới','Quá trình quang hợp','Sự trao đổi khí'], answer:0, source:'Bài 12'},
-  /* ... SNIPPED for brevity in code listing here, but in the actual file the full 50 items must be present ... */
-];
+            // Round 2
+            if (phase === 'round2') return (
+                <div className="min-h-screen p-4 flex flex-col relative z-10">
+                    <div className="flex justify-between items-center mb-6 px-4">
+                        <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-2 drop-shadow-md">
+                            {Icons.Users} VÒNG 2: CỐ VẤN
+                        </h2>
+                        <button onClick={() => setPhase('round3')} className="text-sm font-bold bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition">Qua Vòng 3 &rarr;</button>
+                    </div>
 
-/* NOTE: For brevity in this displayed snippet I've omitted the full PRELOADED array content.
-   When you paste this into your project, ensure PRELOADED includes the full 50 question objects
-   exactly as in the previous full HTML I provided. */
+                    <ScoreBoard />
+                    <Timer />
 
-/* ===== helpers & persistence ===== */
-function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
-function load(){ const raw = localStorage.getItem(KEY); if(raw) state = JSON.parse(raw); else state = {questions: PRELOADED.slice(), quizzes: [], results: []}; }
-function ui(id){ return document.getElementById(id); }
-function uid(){ return 'id'+Math.random().toString(36).slice(2,9); }
-function toast(msg, t=2500){ const m = ui('modal'); m.innerText = msg; m.style.display='block'; setTimeout(()=>m.style.display='none', t); }
+                    <div className="flex-1 flex flex-col items-center mt-4">
+                        <div className="perspective-1000 w-full max-w-4xl h-[500px] cursor-pointer" onClick={() => setIsSituationFlipped(!isSituationFlipped)}>
+                            <div className={`card-inner ${isSituationFlipped ? 'flipped' : ''}`}>
+                                {/* Front */}
+                                <div className="card-front glass-card flex flex-col items-center justify-center p-10 bg-white/90 text-gray-800 shadow-2xl border-4 border-yellow-400">
+                                    <div className="absolute top-0 right-0 p-4 bg-yellow-400 text-black font-black text-sm tracking-widest transform rotate-0 rounded-bl-xl">TOP SECRET</div>
+                                    <div className="w-24 h-24 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mb-6 animate-pulse shadow-inner">
+                                        <span className="text-5xl font-black">?</span>
+                                    </div>
+                                    <h3 className="text-5xl font-black text-gray-800 mb-2 tracking-tighter uppercase">{situationData[currentSituation].title}</h3>
+                                    <p className="text-gray-500 text-sm mt-4 font-bold uppercase tracking-widest bg-gray-100 px-4 py-2 rounded-full">Chạm để mở hồ sơ</p>
+                                </div>
 
-/* ===== init ===== */
-load(); renderRoleUI(); renderAll();
+                                {/* Back */}
+                                <div className="card-back glass-card flex flex-col p-12 bg-gray-900 text-white shadow-2xl border-4 border-white/20">
+                                    <div className="flex items-center gap-3 mb-8 border-b border-gray-700 pb-4">
+                                        <div className="w-2 h-10 bg-gradient-to-b from-pink-500 to-purple-500 rounded-full"></div>
+                                        <div>
+                                            <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">Chủ đề</div>
+                                            <div className={`text-2xl font-black ${situationData[currentSituation].color}`}>{situationData[currentSituation].theme}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex-1 flex items-center justify-center">
+                                        <p className="text-2xl md:text-4xl leading-snug font-medium text-center">
+                                            "{situationData[currentSituation].content}"
+                                        </p>
+                                    </div>
 
-/* ===== Role UI functions ===== */
-function setTeacherRole(flag){
-  isTeacher = !!flag;
-  localStorage.setItem(ROLE_KEY, isTeacher ? 'teacher' : 'student');
-  renderRoleUI();
-}
-function clearRole(){
-  isTeacher = false;
-  localStorage.removeItem(ROLE_KEY);
-  renderRoleUI();
-}
-function renderRoleUI(){
-  // show role label
-  const rb = ui('roleBox');
-  if(isTeacher) rb.innerHTML = 'Role: <strong>Giáo viên</strong>';
-  else rb.innerHTML = 'Role: <strong>Học sinh</strong>';
+                                    <div className="mt-8 flex justify-center w-full">
+                                        <div className="flex items-center gap-3 text-sm font-bold bg-white/10 px-6 py-3 rounded-full border border-white/20 shadow-lg">
+                                            {Icons.MessageSquare} Ý KIẾN CỦA BẠN
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-  // teacher area visibility
-  ui('teacherArea').classList.toggle('hidden', !isTeacher);
-  ui('teacherLocked').classList.toggle('hidden', isTeacher);
+                        <div className="mt-8 flex gap-4 z-20">
+                            <button 
+                                onClick={() => { setIsSituationFlipped(false); setCurrentSituation(Math.max(0, currentSituation - 1)); }}
+                                disabled={currentSituation === 0}
+                                className="px-6 py-3 rounded-full bg-white/20 hover:bg-white/30 font-bold transition disabled:opacity-30"
+                            >
+                                Hồ sơ trước
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    if (currentSituation < situationData.length - 1) {
+                                        setIsSituationFlipped(false);
+                                        setCurrentSituation(currentSituation + 1);
+                                        setTimeLeft(60); setIsRunning(false);
+                                    } else {
+                                        setPhase('round3');
+                                    }
+                                }}
+                                className="px-8 py-3 rounded-full bg-white text-purple-700 font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition flex items-center gap-2"
+                            >
+                                Hồ sơ tiếp {Icons.ChevronRight}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
 
-  // protect export/import buttons: only teacher can export/import
-  ui('btnExport').disabled = !isTeacher;
-  ui('btnImport').disabled = !isTeacher;
-  ui('btnExport').classList.toggle('ghost', !isTeacher);
-  ui('btnImport').classList.toggle('ghost', !isTeacher);
+            // Round 3
+            if (phase === 'round3') return (
+                <div className="min-h-screen p-4 flex flex-col relative z-10">
+                    <div className="flex justify-between items-center mb-6 px-4">
+                        <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-2 drop-shadow-md">
+                            {Icons.Target} VÒNG 3: MỤC TIÊU
+                        </h2>
+                        <button onClick={() => setPhase('welcome')} className="text-sm font-bold bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition">Về trang chủ</button>
+                    </div>
 
-  // teacher controls locking (visual + pointer-events)
-  const tControls = document.querySelectorAll('.teacher-controls');
-  tControls.forEach(el => {
-    if(!isTeacher){
-      el.classList.add('locked');
-      el.style.pointerEvents='none'; el.style.opacity='0.5';
-    } else {
-      el.classList.remove('locked');
-      el.style.pointerEvents='auto'; el.style.opacity='1';
-    }
-  });
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full flex-1">
+                        {/* Input Panel */}
+                        <div className="lg:col-span-4">
+                            <div className="glass-card h-full p-6 bg-white/80 text-gray-800 shadow-xl">
+                                <h3 className="text-xl font-black text-purple-600 mb-6 border-b border-gray-200 pb-4 uppercase">Nhập thông tin</h3>
+                                <form onSubmit={(e) => {
+                                    e.preventDefault();
+                                    if (newNoteName && newNoteContent) {
+                                        const styles = [
+                                            'bg-yellow-100 text-yellow-800 rotate-1', 
+                                            'bg-green-100 text-green-800 -rotate-1', 
+                                            'bg-pink-100 text-pink-800 rotate-2', 
+                                            'bg-blue-100 text-blue-800 -rotate-2'
+                                        ];
+                                        const randomStyle = styles[Math.floor(Math.random() * styles.length)];
+                                        setNotes([...notes, { name: newNoteName, content: newNoteContent, style: randomStyle, id: Date.now() }]);
+                                        setNewNoteName(""); setNewNoteContent("");
+                                    }
+                                }}>
+                                    <div className="mb-4">
+                                        <label className="text-xs font-bold text-gray-500 mb-2 block uppercase">Tên / Đội</label>
+                                        <input 
+                                            type="text" 
+                                            value={newNoteName}
+                                            onChange={(e) => setNewNoteName(e.target.value)}
+                                            className="w-full bg-gray-50 border-2 border-gray-200 rounded-xl p-3 text-gray-800 focus:border-purple-500 focus:outline-none transition-all font-bold"
+                                            placeholder="Ví dụ: Đội 1..."
+                                        />
+                                    </div>
+                                    <div className="mb-6">
+                                        <label className="text-xs font-bold text-gray-500 mb-2 block uppercase">Mục tiêu của bạn</label>
+                                        <textarea 
+                                            value={newNoteContent}
+                                            onChange={(e) => setNewNoteContent(e.target.value)}
+                                            className="w-full h-32 bg-gray-50 border-2 border-gray-200 rounded-xl p-3 text-gray-800 focus:border-purple-500 focus:outline-none transition-all"
+                                            placeholder="Tôi cam kết sẽ..."
+                                        ></textarea>
+                                    </div>
+                                    <button type="submit" className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-black uppercase tracking-wider hover:shadow-lg hover:-translate-y-1 transition flex items-center justify-center gap-2">
+                                        {Icons.Plus} Dán lên bảng
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
 
-  // update visible view if teacher view is active but not logged in
-  if(!isTeacher && document.getElementById('view-teacher') && !ui('view-teacher').classList.contains('hidden') ){
-    // ensure teacher locked UI visible
-    ui('teacherArea').classList.add('hidden'); ui('teacherLocked').classList.remove('hidden');
-  }
+                        {/* The Wall */}
+                        <div className="lg:col-span-8">
+                            <div className="glass-card h-full min-h-[500px] p-8 rounded-2xl border-4 border-dashed border-white/20 relative overflow-y-auto">
+                                <div className="absolute top-4 right-6 text-sm font-bold text-white/50 uppercase tracking-widest">Bảng Mục Tiêu Lớp Học</div>
+                                
+                                {notes.length === 0 ? (
+                                    <div className="h-full flex flex-col items-center justify-center text-white/40">
+                                        <div className="text-6xl mb-4 opacity-50">{Icons.MessageSquare}</div>
+                                        <p className="font-bold text-lg">Chưa có mục tiêu nào được dán.</p>
+                                        <p className="text-sm">Hãy là người đầu tiên!</p>
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 content-start mt-8">
+                                        {notes.map(note => (
+                                            <div key={note.id} className={`p-6 rounded-lg shadow-xl animate-float cursor-pointer hover:scale-105 transition-transform duration-300 ${note.style}`}>
+                                                <div className="w-3 h-3 rounded-full bg-black/10 mx-auto mb-4"></div>
+                                                <div className="font-black text-lg mb-2 border-b border-black/10 pb-2">{note.name}</div>
+                                                <p className="font-medium leading-relaxed font-serif italic">"{note.content}"</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
 
-  renderQuestionList();
-  renderQuizList();
-}
+            return <div className="text-white">{phase}</div>; 
+        };
 
-/* ===== Navigation ===== */
-ui('nav-home').onclick = ()=>{ showView('home'); }
-ui('nav-teacher').onclick = ()=>{
-  // if already teacher, show teacher view
-  if(isTeacher){ showView('teacher'); renderQuestionList(); renderQuizList(); renderTeacherStats(); }
-  else {
-    // open login modal
-    ui('loginModal').style.display='flex';
-  }
-}
-ui('nav-student').onclick = ()=>{ setStudentView(); }
-function setStudentView(){ setTeacherRole(false); showView('student'); populateQuizSelect(); renderRecent(); renderAnalysis(); }
-
-ui('seed').onclick = ()=>{ state.questions = PRELOADED.slice(); state.quizzes = []; state.results = []; save(); toast('Đã nạp dữ liệu mẫu (50 câu)'); renderAll(); }
-ui('btn-reset').onclick = ()=>{ if(!confirm('Xóa toàn bộ dữ liệu lưu trên trình duyệt?')) return; localStorage.removeItem(KEY); localStorage.removeItem(ROLE_KEY); load(); renderAll(); renderRoleUI(); toast('Đã reset'); }
-
-/* ===== Login modal handlers ===== */
-ui('openLogin').onclick = ()=> ui('loginModal').style.display='flex';
-ui('loginCancel').onclick = ()=> ui('loginModal').style.display='none';
-ui('loginOk').onclick = ()=>{
-  const pass = ui('loginPass').value;
-  const REAL_PASS = 'teacher123'; // change here if you want a different password
-  if(pass === REAL_PASS){
-    setTeacherRole(true);
-    ui('loginModal').style.display='none';
-    ui('loginPass').value = '';
-    showView('teacher'); renderQuestionList(); renderQuizList(); renderTeacherStats();
-    toast('Đăng nhập thành công (Giáo viên)');
-  } else {
-    alert('Mật khẩu không đúng');
-  }
-};
-ui('btnLogout') && (ui('btnLogout').onclick = ()=>{ if(confirm('Đăng xuất khỏi tài khoản Giáo viên?')){ clearRole(); showView('home'); toast('Đã đăng xuất'); } });
-
-/* ===== Teacher: add question (now guarded) ===== */
-ui('q_type') && (ui('q_type').onchange = ()=>{ ui('mcq_area').style.display = ui('q_type').value==='mcq' ? 'block' : 'none'; });
-ui('add_q') && (ui('add_q').onclick = ()=>{
-  if(!isTeacher) return alert('Chỉ giáo viên mới được thêm câu hỏi. Vui lòng đăng nhập.');
-  const topic = ui('q_topic').value.trim() || 'Chung';
-  const type = ui('q_type').value;
-  const text = ui('q_text').value.trim();
-  const level = ui('q_level').value;
-  if(!text) return alert('Nhập nội dung câu hỏi');
-  const q = { id: uid(), topic, type, level, question: text, source: 'Người dùng' };
-  if(type==='mcq'){
-    const opts = [ui('opt_a').value, ui('opt_b').value, ui('opt_c').value, ui('opt_d').value].map(s=>s.trim());
-    if(!opts[0]||!opts[1]) return alert('MCQ cần ít nhất 2 đáp án (A,B)');
-    q.options = opts; q.answer = Number(ui('opt_correct').value) || 0;
-  } else if(type==='tf'){
-    q.options = ['Đúng','Sai']; q.answer = 0;
-  } else { q.type='essay'; }
-  state.questions.push(q); save(); renderQuestionList(); toast('Đã thêm câu hỏi');
-  ui('q_topic').value=''; ui('q_text').value=''; ui('opt_a').value=''; ui('opt_b').value=''; ui('opt_c').value=''; ui('opt_d').value=''; ui('opt_correct').value=0;
-});
-
-/* ===== render question list (teacher-only content hidden for students) ===== */
-function renderQuestionList(){
-  const wrap = ui('q_list'); if(!wrap) return;
-  if(!isTeacher){ wrap.innerHTML = '<div class="small label-locked">Chỉ giáo viên mới thấy ngân hàng câu hỏi. Vui lòng đăng nhập.</div>'; return; }
-  if(!state.questions.length){ wrap.innerHTML='(chưa có câu hỏi)'; return; }
-  wrap.innerHTML = state.questions.map(q=>{
-    const meta = `${q.topic} • ${q.level} • ${q.type.toUpperCase()}`;
-    const ans = q.type==='mcq' ? (q.options && q.options[q.answer] ? `Đáp: ${q.options[q.answer]}` : '') : (q.type==='tf' ? `Đáp: ${q.options[q.answer]}` : 'Tự luận');
-    return `<div class="q"><strong>${escape(q.question)}</strong><div class="small">${escape(meta)} • ${escape(q.source||'—')}</div><div class="small" style="margin-top:6px">${escape(ans)}</div>
-      <div style="margin-top:6px"><button class="ghost small" onclick="deleteQ('${q.id}')">Xóa</button></div></div>`;
-  }).join('');
-}
-window.deleteQ = function(id){ if(!isTeacher) return alert('Chỉ giáo viên mới được xóa câu hỏi.'); if(!confirm('Xóa câu hỏi?')) return; state.questions = state.questions.filter(x=>x.id!==id); state.quizzes.forEach(z=>z.qids = z.qids.filter(i=>i!==id)); save(); renderQuestionList(); renderQuizList(); toast('Đã xóa'); };
-
-/* ===== generate quiz (guarded: only teacher can save quizzes) ===== */
-ui('gen_btn') && (ui('gen_btn').onclick = ()=>{
-  const mcqN = Number(ui('gen_mcq').value)||0;
-  const essayN = Number(ui('gen_essay').value)||0;
-  const topic = ui('gen_topic').value.trim().toLowerCase();
-  let pool = state.questions.slice();
-  if(topic) pool = pool.filter(q=>q.topic.toLowerCase().includes(topic));
-  const mcqPool = pool.filter(q=>q.type==='mcq');
-  const essayPool = pool.filter(q=>q.type==='essay');
-  if(mcqPool.length < mcqN || essayPool.length < essayN) {
-    return alert('Không đủ câu hỏi trong pool theo yêu cầu. Giảm số câu hoặc thêm câu hỏi.');
-  }
-  const pick = sample(mcqPool, mcqN).concat(sample(essayPool, essayN));
-  ui('gen_preview').innerText = pick.map((q,i)=>`${i+1}. ${q.question} (${q.type})`).join('\n\n');
-  ui('save_gen').disabled = false; ui('save_gen').dataset.temp = JSON.stringify(pick.map(q=>q.id));
-});
-ui('save_gen') && (ui('save_gen').onclick = ()=>{
-  if(!isTeacher) return alert('Chỉ giáo viên mới được lưu đề.');
-  const ids = JSON.parse(ui('save_gen').dataset.temp || '[]'); if(!ids.length) return alert('Không có đề');
-  const title = prompt('Tiêu đề đề thi:', `Đề tự sinh ${new Date().toLocaleString()}`);
-  const quiz = { id: uid(), title, qids: ids, created: Date.now() };
-  state.quizzes.push(quiz); save(); renderQuizList(); populateQuizSelect(); ui('save_gen').disabled = true; ui('gen_preview').innerText = ''; toast('Đã lưu đề');
-});
-
-/* ===== render quizzes (if not teacher, hide management actions) ===== */
-function renderQuizList(){
-  const wrap = ui('quiz_list'); if(!wrap) return;
-  if(!isTeacher){
-    wrap.innerHTML = '<div class="small label-locked">Chỉ giáo viên mới thấy danh sách đề đã lưu.</div>'; return;
-  }
-  if(!state.quizzes.length){ wrap.innerHTML='(chưa có đề)'; return; }
-  wrap.innerHTML = state.quizzes.map(z=>{
-    return `<div style="margin-bottom:8px"><strong>${escape(z.title)}</strong> <div class="small">(${z.qids.length} câu)</div>
-      <div style="margin-top:6px"><button class="ghost small" onclick="preview('${z.id}')">Xem</button> <button class="ghost small" onclick="deleteQuiz('${z.id}')">Xóa</button></div></div>`;
-  }).join('');
-}
-window.preview = function(id){ const z = state.quizzes.find(x=>x.id===id); if(!z) return alert('Không có'); alert('Preview: '+z.qids.map((qid,i)=>`${i+1}. ${(state.questions.find(q=>q.id===qid)||{question:'[đã xóa]'}).question}`).join('\n\n')); }
-window.deleteQuiz = function(id){ if(!isTeacher) return alert('Chỉ giáo viên mới được xóa đề.'); if(!confirm('Xóa đề?')) return; state.quizzes = state.quizzes.filter(x=>x.id!==id); save(); renderQuizList(); populateQuizSelect(); toast('Đã xóa đề'); };
-
-/* ===== student flows unchanged (students cannot create/save/delete quizzes) ===== */
-/* (same student code as before - omitted here for brevity but should be included) */
-
-/* For brevity: include the same student start/submit/render logic from the previous full implementation.
-   IMPORTANT: ensure UI interactions do NOT allow students to call teacher-only functions (guards added above). */
-
-/* ===== Export / Import JSON (guarded) ===== */
-ui('btnExport').onclick = ()=>{
-  if(!isTeacher) return alert('Chỉ giáo viên mới được export dữ liệu.');
-  const data = JSON.stringify(state, null, 2);
-  const blob = new Blob([data], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'ssbio_questions_export.json'; document.body.appendChild(a); a.click(); a.remove();
-};
-ui('btnImport').onclick = ()=> {
-  if(!isTeacher) { return alert('Chỉ giáo viên mới được import dữ liệu.'); }
-  ui('fileInput').click();
-};
-ui('fileInput').onchange = e=>{
-  const f = e.target.files[0]; if(!f) return;
-  const reader = new FileReader(); reader.onload = ev=>{
-    try{
-      const json = JSON.parse(ev.target.result);
-      if(json.questions) state = json; else return alert('File JSON không đúng định dạng (cần trường questions).');
-      save(); renderAll(); toast('Import thành công');
-    }catch(err){ alert('Không thể đọc file JSON: '+err); }
-  }; reader.readAsText(f);
-};
-
-/* ===== utilities & renders (keep same behavior) ===== */
-function renderTeacherStats(){
-  const wrap = ui('teacher_stats');
-  if(!state.results.length){ wrap.innerHTML='(chưa có kết quả)'; return; }
-  const avg = Math.round(state.results.reduce((s,r)=>s+r.score,0)/state.results.length);
-  const byTopic = {};
-  state.results.forEach(r=> Object.entries(r.byTopic||{}).forEach(([t,st])=>{ if(!byTopic[t]) byTopic[t]={correct:0,total:0}; byTopic[t].correct+=st.correct; byTopic[t].total+=st.total; }));
-  let html = `Số lần làm: ${state.results.length} • Điểm trung bình (MCQ): ${avg}%\n`;
-  Object.entries(byTopic).forEach(([t,st])=>{ const pct = st.total ? Math.round(100*st.correct/st.total):0; html += `\n${t}: ${pct}% (${st.correct}/${st.total})`; });
-  wrap.innerText = html;
-}
-
-function renderRecent(){
-  const wrap = ui('recent'); if(!state.results.length){ wrap.innerHTML='(chưa có)'; return; }
-  wrap.innerHTML = state.results.slice(-6).reverse().map(r=>`${r.student} • ${r.title} • ${r.score}% • ${new Date(r.timestamp).toLocaleString()}`).join('<br>');
-}
-
-function suggestion(pct){
-  if(pct>=85) return 'Tốt — tiếp tục nâng cao';
-  if(pct>=65) return 'Khá — ôn thêm câu sai';
-  if(pct>=40) return 'Trung bình — ôn lại kiến thức cơ bản';
-  return 'Yếu — cần ôn lại toàn bộ chủ đề';
-}
-
-function renderAnalysis(){
-  const wrap = ui('analysis');
-  const name = ui('stu_name').value.trim();
-  const r = name ? state.results.slice().reverse().find(x=>x.student===name) : state.results.slice().reverse()[0];
-  if(!r){ wrap.innerHTML = 'Chưa có dữ liệu phân tích cho học sinh này.'; return; }
-  let html = `<div class="small">Phân tích: <strong>${escape(r.student)}</strong> • Điểm: <strong>${r.score}%</strong></div>`;
-  Object.entries(r.byTopic).forEach(([t,st])=>{ const pct = st.total ? Math.round(100*st.correct/st.total) : 0; html += `<div style="margin-top:8px"><strong>${escape(t)}</strong> — ${pct}% <div class="bar" style="margin-top:6px"><i style="width:${pct}%"></i></div><div class="small">Gợi ý: ${suggestion(pct)}</div></div>`; });
-  wrap.innerHTML = html;
-}
-
-function populateQuizSelect(){
-  const sel = ui('select_quiz'); if(!sel) return;
-  sel.innerHTML = '';
-  if(!state.quizzes.length){ sel.innerHTML = '<option value="">(Chưa có đề - giáo viên tạo)</option>'; return; }
-  sel.innerHTML = state.quizzes.map(z=>`<option value="${z.id}">${escape(z.title)}</option>`).join('');
-}
-
-function showView(which){
-  ui('view-home').classList.toggle('hidden', which!=='home');
-  ui('view-teacher').classList.toggle('hidden', which!=='teacher');
-  ui('view-student').classList.toggle('hidden', which!=='student');
-}
-function show(id){ ui(id).classList.remove('hidden'); }
-function hide(id){ ui(id).classList.add('hidden'); }
-function escape(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
-function sample(arr,n){ const copy=arr.slice(), res=[]; for(let i=0;i<n;i++){ const j=Math.floor(Math.random()*copy.length); res.push(copy.splice(j,1)[0]); } return res; }
-
-function renderAll(){ renderQuestionList(); renderQuizList(); populateQuizSelect(); renderRecent(); renderAnalysis(); renderTeacherStats(); }
-
-/* initial view */
-showView('home');
-</script>
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
