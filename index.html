@@ -3,495 +3,883 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Better Me - GenZ Edition</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Nền tảng Bài tập Sáng tạo NDS</title>
+    <!-- Tải Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fonts hiện đại, trẻ trung -->
+    <!-- Thêm font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Be+Vietnam+Pro:wght@400;500;700;900&display=swap');
-
-        :root {
-            /* Palette Gen Z năng động */
-            --primary: #7F5AF0;    /* Tím sáng */
-            --secondary: #2CB67D;  /* Xanh lá tươi */
-            --accent: #FF8906;     /* Cam nổi bật */
-            --text-main: #FFFFFE;
-            --text-sub: #94A1B2;
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --card-border: rgba(255, 255, 255, 0.2);
-        }
-
-        body {
-            font-family: 'Be Vietnam Pro', sans-serif;
-            color: var(--text-main);
-            overflow-x: hidden;
-            min-height: 100vh;
-            /* Nền Gradient động Cyberpop */
+        /* Sử dụng font Inter làm mặc định */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            /* Nền Gradient Động mới */
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
+            color: #334155; /* Slate-700 */
         }
 
+        /* Animation Gradient Background */
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Typography */
-        h1, h2, h3, .brand-font {
-            font-family: 'Chakra Petch', sans-serif;
-        }
-
-        /* Glassmorphism Cards - Sáng hơn, hiện đại hơn */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            border-radius: 20px;
-        }
-
-        /* 3D Flip Fix */
-        .perspective-1000 { perspective: 1500px; }
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-        }
-        .card-inner.flipped { transform: rotateY(180deg); }
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        .card-back { transform: rotateY(180deg); }
-
-        /* Modern Buttons */
-        .btn-modern {
-            background: white;
-            color: #e73c7e;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: none;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-modern:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            background: #fff;
-            color: #23a6d5;
-        }
-        .btn-modern:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        /* Floating Animation */
+        /* Animation Trôi nổi (Floating) */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
-        .animate-float { animation: float 6s ease-in-out infinite; }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.5); border-radius: 4px; }
+        /* --- Class tùy chỉnh cho hiệu ứng Liquid Glass & Floating --- */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+            /* Thêm hiệu ứng Floating */
+            animation: float 6s ease-in-out infinite;
+        }
+        /* Thêm delay nhẹ cho các panel khác nhau để tạo cảm giác tự nhiên */
+        .glass-panel:nth-child(even) { animation-delay: 1s; }
+        .glass-panel:nth-child(odd) { animation-delay: 0.5s; }
+
+        /* --- Hiệu ứng 3D Tilt khi Hover --- */
+        .tilt-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            perspective: 1000px;
+        }
+        .tilt-card:hover {
+            transform: rotateX(5deg) rotateY(-5deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .glass-sidebar {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-right: 1px solid rgba(255, 255, 255, 0.6);
+            /* Thêm hiệu ứng Floating nhẹ cho sidebar */
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .glass-input {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: #a78bfa; /* Violet-400 */
+            box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.2);
+            outline: none;
+        }
+
+        .glass-btn {
+            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%); /* Indigo to Purple */
+            color: white;
+            border: none;
+            box-shadow: 0 4px 15px rgba(129, 140, 248, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .glass-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(129, 140, 248, 0.4);
+            opacity: 0.95;
+        }
+
+        /* Ẩn tất cả các trang nội dung theo mặc định */
+        .page-content { 
+            display: none; 
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hiển thị trang đang hoạt động */
+        .page-content.active { 
+            display: block; 
+        }
+
+        /* Kiểu cho link điều hướng đang hoạt động */
+        .nav-link {
+            transition: all 0.3s ease;
+            color: #475569; /* Slate-600 */
+            border-radius: 0.75rem; /* rounded-xl */
+        }
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.5);
+            color: #7c3aed; /* Violet-600 */
+        }
+        .nav-link.active {
+            background: linear-gradient(90deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%);
+            color: #6d28d9; /* Violet-700 */
+            font-weight: 700;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-left: 4px solid #8b5cf6; /* Violet-500 */
+        }
+
+        /* Định nghĩa lớp answer-box (kế thừa glass-input) */
+        .answer-box {
+            margin-top: 0.75rem;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(209, 213, 219, 0.5);
+        }
+        .answer-box:focus {
+            background: rgba(255, 255, 255, 0.95);
+            outline: 2px solid transparent;
+            outline-offset: 2px;
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(196, 181, 253, 0.5);
+        }
+
+        /* --- CSS cho Modal và Spinner (Giữ nguyên logic, thay đổi giao diện) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1); /* Nền kính mờ cho overlay */
+            backdrop-filter: blur(5px);
+            display: none; 
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+        .modal-overlay.active {
+            display: flex; 
+        }
+        .modal-content {
+            background: rgba(255, 255, 255, 0.85); /* Glass modal */
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 0;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 700px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            /* Thêm hiệu ứng Floating cho modal */
+            animation: float 7s ease-in-out infinite;
+        }
+        .modal-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.5);
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #7c3aed, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .modal-body-container {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-body-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #334155;
+        }
+        /* Styles cho Markdown */
+        .markdown-content h3 { font-weight: 700; font-size: 1.1em; margin-top: 1em; margin-bottom: 0.5em; color: #4c1d95; }
+        .markdown-content strong { font-weight: 700; color: #701a75; }
+        .markdown-content ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1em; }
+        .markdown-content li { margin-bottom: 0.25em; }
+        
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: flex-end;
+            background: rgba(255,255,255,0.3);
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+        }
+        .modal-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(167, 139, 250, 0.3); 
+            border-top-color: #8b5cf6; 
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Kiểu CSS cho bản in - Reset về đen trắng */
+        @media print {
+            body {
+                font-family: 'Times New Roman', Times, serif;
+                font-size: 12pt;
+                color: #000;
+                background: none !important;
+            }
+            .glass-panel, .glass-sidebar, .modal-content {
+                background: none !important;
+                border: none !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+                animation: none !important; /* Tắt animation khi in */
+            }
+            nav, .print-exercise-button, button {
+                display: none !important;
+            }
+            main {
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+            }
+            .page-content {
+                display: none !important;
+            }
+            .page-content.active {
+                display: block !important;
+            }
+            .bg-white, .bg-gray-100 {
+                background-color: #fff !important;
+            }
+            .text-indigo-700, .text-green-700, .text-gray-700 {
+                color: #000 !important;
+            }
+            table, th, td {
+                border: 1px solid #ccc !important;
+            }
+            .answer-box {
+                border: 1px dashed #999 !important;
+                background: #fff !important;
+            }
+            #q2-a-details.hidden, #q2-b-details.hidden {
+                display: none !important;
+            }
+        }
     </style>
 </head>
-<body>
-    <div id="root"></div>
+<body class="min-h-screen">
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+    <div class="flex flex-col md:flex-row min-h-screen">
+        
+        <!-- Thanh điều hướng bên (Sidebar Glass) -->
+        <nav class="w-full md:w-72 glass-sidebar p-5 space-y-3 shrink-0 flex flex-col z-10">
+            <div>
+                <h1 class="text-2xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-pink-600">
+                    Năng lực Sáng tạo NDS
+                </h1>
+                <a href="#" class="nav-link active block p-3 text-sm" data-target="page-home">
+                    Trang chủ
+                </a>
+                <a href="#" class="nav-link block p-3 text-sm" data-target="page-bt1">
+                    Bài tập 1: Phát triển NDS
+                </a>
+                <a href="#" class="nav-link block p-3 text-sm" data-target="page-bt2">
+                    Bài tập 2: Tích hợp & Tái lập
+                </a>
+                <a href="#" class="nav-link block p-3 text-sm" data-target="page-bt3">
+                    Bài tập 3: Lập trình
+                </a>
+            </div>
+        </nav>
 
-        // --- ICONS ---
-        const Icon = ({ path, size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                {path}
-            </svg>
-        );
+        <!-- Khu vực nội dung chính -->
+        <main class="flex-1 p-6 md:p-10 overflow-auto z-0">
 
-        const Icons = {
-            Brain: <Icon path={<><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></>} />,
-            Target: <Icon path={<><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></>} />,
-            Zap: <Icon path={<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>} />,
-            Users: <Icon path={<><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></>} />,
-            ChevronRight: <Icon path={<path d="m9 18 6-6-6-6"/>} />,
-            RotateCcw: <Icon path={<><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></>} />,
-            MessageSquare: <Icon path={<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>} />,
-            Lock: <Icon path={<><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>} />,
-            Unlock: <Icon path={<><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></>} />,
-            Clock: <Icon path={<><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>} />,
-            Plus: <Icon path={<><path d="M5 12h14"/><path d="M12 5v14"/></>} />
-        };
+            <!-- Trang: Trang chủ -->
+            <div id="page-home" class="page-content active space-y-6">
+                <h2 class="text-3xl font-bold text-slate-800 mb-4 drop-shadow-sm">
+                    Chào mừng đến với Nền tảng Bài tập
+                </h2>
+                <div class="glass-panel tilt-card p-8 rounded-2xl">
+                    <p class="text-lg text-slate-700 leading-relaxed">
+                        Đây là nền tảng web được thiết kế để hỗ trợ bạn thực hành các bài tập phát triển năng lực sáng tạo nội dung số (NDS).
+                    </p>
+                    <p class="text-slate-700 leading-relaxed mt-4">
+                        Mỗi bài tập được xây dựng theo cấu trúc 4 giai đoạn:
+                    </p>
+                    <ul class="list-decimal list-inside text-slate-700 mt-4 space-y-2 ml-2">
+                        <li><strong class="text-violet-700">Trải nghiệm cụ thể:</strong> Đặt ra bối cảnh thực tiễn.</li>
+                        <li><strong class="text-violet-700">Quan sát phản tư:</strong> Thiết kế nhiệm vụ để phát triển năng lực.</li>
+                        <li><strong class="text-violet-700">Trừu tượng hóa:</strong> Thiết kế khung nội dung/kế hoạch cho sản phẩm.</li>
+                        <li><strong class="text-violet-700">Thử nghiệm tích cực:</strong> Vận dụng kiến thức để phát triển sản phẩm.</li>
+                    </ul>
+                    <p class="text-slate-700 leading-relaxed mt-6">
+                        Sử dụng thanh điều hướng bên trái để chọn bài tập bạn muốn thực hiện.
+                    </p>
+                </div>
+            </div>
 
-        // DATA
-        const quizData = [
-            { id: 1, hint: "Nhà phát minh bóng đèn điện. Thử sai 10.000 lần.", answer: "Thomas Edison", desc: "Thiên tài là 1% cảm hứng và 99% mồ hôi." },
-            { id: 2, hint: "Rapper 'tử tế'. Từng làm công nhân vệ sinh 7 năm.", answer: "Đen Vâu", desc: "Chủ nhân hit 'Mang tiền về cho mẹ'." },
-            { id: 3, hint: "Sáng lập Apple. iPhone. 'Stay hungry, stay foolish'.", answer: "Steve Jobs", desc: "Huyền thoại công nghệ." },
-            { id: 4, hint: "Cầu thủ số 7. Biểu tượng của kỷ luật và nỗ lực.", answer: "Cristiano Ronaldo", desc: "CR7 - Cỗ máy ghi bàn." },
-            { id: 5, hint: "Tỷ phú sáng lập Microsoft. Bỏ học Harvard.", answer: "Bill Gates", desc: "Người thay đổi thế giới máy tính." },
-            { id: 6, hint: "Mẹ đẻ Harry Potter. Từng là mẹ đơn thân nghèo khó.", answer: "J.K. Rowling", desc: "Từ trợ cấp xã hội đến tỷ phú." },
-            { id: 7, hint: "Thiên tài bóng đá Argentina. Vô địch World Cup.", answer: "Lionel Messi", desc: "El Pulga - Phép màu trên sân cỏ." },
-            { id: 8, hint: "Ca sĩ 'Lạc Trôi'. Sếp của Sky.", answer: "Sơn Tùng M-TP", desc: "Ngôi sao V-Pop hàng đầu." },
-            { id: 9, hint: "Quả táo rơi trúng đầu. Định luật Vạn vật hấp dẫn.", answer: "Isaac Newton", desc: "Nhà vật lý vĩ đại." },
-            { id: 10, hint: "Hoa hậu Hoàn vũ VN. Người dân tộc Ê-đê.", answer: "H'Hen Niê", desc: "Từ cô gái hái cà phê đến Top 5 thế giới." }
-        ];
+            <!-- Trang: Bài tập 1 -->
+            <div id="page-bt1" class="page-content space-y-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-3xl font-bold text-slate-800 drop-shadow-sm">Bài tập 1: Phát triển NDS</h2>
+                    <a href="#" class="print-exercise-button p-3 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-center shadow-lg hover:shadow-emerald-300/50 transition-all duration-200 hover:-translate-y-0.5">
+                        In Bài 1 / Xuất PDF
+                    </a>
+                </div>
+                
+                <!-- Phần 1: Tình huống sư phạm -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 1: Tình huống sư phạm</h3>
+                    <p class="text-slate-700 leading-relaxed">
+                        Là một GVBM Sinh học tại trường THPT A, tham gia cuộc thi “Thiết kế bài giảng E – learning năm học 2025-2026” và nhận chủ đề thiết kế bài giảng thuộc chương trình sinh học 10. Bạn đang đứng trước các vấn đề: E-learning có những ưu việt gì so với bài giảng truyền thống? Làm thế nào để thiết kế một bài giảng E-learning có tính tương tác cao, giúp học sinh tự khám phá, thao tác và hiểu sâu kiến thức Sinh học thông qua các công cụ số phù hợp?
+                    </p>
+                </div>
+                
+                <!-- Phần 2: Thiết lập nền tảng -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 2: Thiết lập nền tảng</h3>
+                    <div class="space-y-5 text-slate-700">
+                        <div>
+                            <p class="font-medium">1. Xác định mục tiêu nội dung/chủ đề cho bài giảng E – learning?</p>
+                            <textarea id="bt1-q1-answer" class="answer-box" rows="3" placeholder="Nhập câu trả lời của bạn..."></textarea>
+                        </div>
+                        <p class="font-medium">2. Có thể áp dụng công cụ nào để nhận thấy e – learning góp phần nâng cao hiệu quả dạy học chủ đề đã chọn so với bài giảng truyền thống?</p>
+                        <div class="ml-2 space-y-2 mt-2 p-3 rounded-xl bg-white/30">
+                            <div class="flex items-center">
+                                <input id="bt1-q2-a" name="bt1-q2" type="radio" class="w-4 h-4 text-violet-600 bg-gray-100 border-gray-300 focus:ring-violet-500">
+                                <label for="bt1-q2-a" class="ml-3 block">a) Khảo sát (thu nhận phản hồi từ người học)</label>
+                            </div>
+                            <div class="flex items-center">
+                                <input id="bt1-q2-b" name="bt1-q2" type="radio" class="w-4 h-4 text-violet-600 bg-gray-100 border-gray-300 focus:ring-violet-500">
+                                <label for="bt1-q2-b" class="ml-3 block">b) Bài kiểm tra cuối khóa</label>
+                            </div>
+                        </div>
+                        <p class="font-medium">3. Xác định phương tiện/công nghệ số mà bạn có thể sử dụng thành thạo để thiết kế các nội dung số cho e – learning?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 ml-2 mt-2 p-3 rounded-xl bg-white/30">
+                            <div class="flex items-center"><input id="bt1-tool-canva" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt1-tool-canva" class="ml-3">Canva/ Power Point</label></div>
+                            <div class="flex items-center"><input id="bt1-tool-gpt" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt1-tool-gpt" class="ml-3">GPT/Gemini</label></div>
+                            <div class="flex items-center"><input id="bt1-tool-powtoon" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt1-tool-powtoon" class="ml-3">Powtoon/Prezi</label></div>
+                            <div class="flex items-center"><input id="bt1-tool-docs" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt1-tool-docs" class="ml-3">Google docs/word</label></div>
+                            <div class="flex items-center"><input id="bt1-tool-draw" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt1-tool-draw" class="ml-3">Draw/ App đồ họa</label></div>
+                            <div class="flex items-center"><input id="bt1-tool-kahoot" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt1-tool-kahoot" class="ml-3">Kahoot</label></div>
+                            <div class="flex items-center"><input id="bt1-tool-leoai" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt1-tool-leoai" class="ml-3">Leonardo AI</label></div>
+                            <div class="flex items-center"><input id="bt1-tool-other" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt1-tool-other" class="ml-3">Khác</label></div>
+                        </div>
+                        <div>
+                            <p class="font-medium">4. Thời gian hoàn thành E-learning?</p>
+                            <textarea class="answer-box" rows="2" placeholder="Nhập câu trả lời của bạn..."></textarea>
+                        </div>
+                    </div>
+                </div>
 
-        const situationData = [
-            { id: 1, title: "HỒ SƠ #01", content: "Minh muốn vào CLB Tiếng Anh nhưng sợ nói sai bị cười. Đã đăng ký rồi rút đơn 2 lần.", theme: "TỰ TIN", color: "text-orange-300" },
-            { id: 2, title: "HỒ SƠ #02", content: "Lan thông minh nhưng 'nước đến chân mới nhảy'. Luôn làm bài tập vào phút chót.", theme: "QUẢN LÝ THỜI GIAN", color: "text-teal-300" },
-            { id: 3, title: "HỒ SƠ #03", content: "Hùng rất dễ nổi nóng khi bị trêu chọc, dẫn đến xô xát và mất bạn bè.", theme: "CẢM XÚC", color: "text-red-300" },
-            { id: 4, title: "HỒ SƠ #04", content: "Hoa nghiện TikTok/Facebook thâu đêm. Đi học uể oải, mất tập trung.", theme: "KỶ LUẬT", color: "text-purple-300" }
-        ];
+                <!-- Phần 3: Nhiệm vụ kiến tạo -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 3: Nhiệm vụ kiến tạo</h3>
+                    <p class="text-slate-700 mb-4">Theo kết quả phân tích các yêu cầu ở phần thiết lập nền tảng, lập kế hoạch thiết kế e – learning theo KHBD theo hướng dẫn bên dưới:</p>
 
-        // COMPONENTS
-        const App = () => {
-            const [phase, setPhase] = useState('welcome');
-            const [scores, setScores] = useState({ 1: 0, 2: 0, 3: 0, 4: 0 });
+                    <!-- CÁC NÚT TÍCH HỢP GEMINI API -->
+                    <div class="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button type="button" id="gemini-suggest-plan-btn" class="glass-btn py-3 px-6 rounded-xl font-semibold text-white">
+                            ✨ Gợi ý Kế hoạch E-learning
+                        </button>
+                        <button type="button" id="gemini-generate-quiz-btn" class="glass-btn py-3 px-6 rounded-xl font-semibold text-white bg-gradient-to-r from-emerald-400 to-teal-500">
+                            ✨ Gợi ý 3 câu hỏi Quiz H5P
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto mt-4 rounded-xl border border-white/50">
+                        <table class="min-w-full divide-y divide-gray-200/50">
+                            <thead class="bg-violet-50/50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-violet-800 uppercase tracking-wider">Yêu cầu</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-violet-800 uppercase tracking-wider">Hướng dẫn</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200/50 bg-white/40 text-slate-700">
+                                <tr>
+                                    <td class="px-6 py-4 font-medium">Phân tích cấu trúc kế hoạch dạy học</td>
+                                    <td class="px-6 py-4">"Xác định: mục tiêu bài học? nội dung trọng tâm? hình thức tổ chức (trực tiếp, trực tuyến, kết hợp)?"</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 font-medium">Xác định vai trò của nội dung số trong từng hoạt động học</td>
+                                    <td class="px-6 py-4">
+                                        <ul class="list-disc list-inside">
+                                            <li>Hoạt động khởi động: sử dụng video, hình ảnh, câu hỏi gợi mở.</li>
+                                            <li>Hoạt động hình thành/khám phá kiến thức: video – bải giảng tương tác</li>
+                                            <li>Hoạt động luyện tập/đánh giá: quiz, trò chơi, bài tập tương tác</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 font-medium">"Xác định thời gian, nguồn lực và công cụ số"</td>
+                                    <td class="px-6 py-4">"Lập kế hoạch chi tiết cho từng loại nội dung: thời lượng, công cụ (Canva, H5P, ..)"</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 font-medium">Tìm hiểu về H5P</td>
+                                    <td class="px-6 py-4"><a href="https://drive.google.com/file/d/1HdthPJHYe4EdaG4PBbiB6nP6ztCslysk/view?usp=sharing" target="_blank" class="text-violet-600 hover:text-violet-800 hover:underline font-medium">Link tài liệu H5P</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Phần 4: Thử thách sáng tạo -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 4: Thử thách sáng tạo</h3>
+                    <p class="text-slate-700 leading-relaxed">
+                        Tham khảo tài liệu hưởng dẫn để sử dụng H5P để tạo E – learning triển khai KHBD và kế hoạch thiết kế E – learning đã hoàn thành ở phần kiến tạo.
+                    </p>
+                    <!-- Bổ sung ô nhập link sản phẩm -->
+                    <div class="mt-4 p-4 bg-white/30 rounded-xl border border-white/40">
+                        <p class="text-slate-700 font-bold mb-2">Sản phẩm: Nộp lại 01 đường link (URL) sản phẩm E-learning H5P hoàn chỉnh.</p>
+                        <input type="text" class="answer-box bg-white/80" placeholder="Dán đường link (URL) sản phẩm H5P của bạn tại đây...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trang: Bài tập 2 -->
+            <div id="page-bt2" class="page-content space-y-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-3xl font-bold text-slate-800 drop-shadow-sm">Bài tập 2: Tích hợp & Tái lập</h2>
+                    <a href="#" class="print-exercise-button p-3 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-center shadow-lg hover:shadow-emerald-300/50 transition-all duration-200 hover:-translate-y-0.5">
+                        In Bài 2 / Xuất PDF
+                    </a>
+                </div>
+
+                <!-- Phần 1: Tình huống sư phạm -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 1: Tình huống sư phạm</h3>
+                    <p class="text-slate-700 leading-relaxed">
+                        Bạn đang cần tổ chức hoạt động học cho học sinh tích hợp kiến thức của 2 chủ đề (Ví dụ: Trao đổi chất và Năng lượng + Ứng dụng công nghệ sinh học) bằng việc tái lập nội dung số. Bạn có thể sử dụng công cụ số nào để tích hợp 2 chủ đề này? Làm thế nào để đảm bảo học sinh có thể tự thao tác và thực hành với nội dung tích hợp này?
+                    </p>
+                </div>
+
+                <!-- Phần 2: Thiết lập nền tảng -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 2: Thiết lập nền tảng</h3>
+                    <div class="space-y-5 text-slate-700">
+                        <div>
+                            <p class="font-medium">1. Xác định hình thức học liệu tích hợp sẽ thực hiện?</p>
+                            <div class="ml-2 space-y-2 mt-2 p-3 rounded-xl bg-white/30">
+                                <div class="flex items-center">
+                                    <input id="q1-flipbook" name="hoc-lieu-type" type="radio" value="flipbook" class="w-4 h-4 text-violet-600 focus:ring-violet-500">
+                                    <label for="q1-flipbook" class="ml-3 block cursor-pointer">a) Flipbook (Sách điện tử tương tác)</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="q1-website" name="hoc-lieu-type" type="radio" value="website" class="w-4 h-4 text-violet-600 focus:ring-violet-500">
+                                    <label for="q1-website" class="ml-3 block cursor-pointer">b) Website (Trang web nội dung)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-medium">2. Xác định công cụ sẽ sử dụng để tái lập nội dung số?</p>
+                            
+                            <!-- NÚT TÍCH HỢP GEMINI API -->
+                            <button type="button" id="gemini-tool-analysis-btn" class="my-3 glass-btn py-2 px-4 rounded-lg text-sm font-medium text-white">
+                                ✨ Gợi ý Phân tích Công cụ
+                            </button>
+
+                            <div class="ml-2 space-y-4 mt-2">
+                                <div class="p-4 rounded-xl bg-white/30 border border-white/40">
+                                    <div class="flex items-center mb-2">
+                                        <input id="q2-a-flipbook" name="tool-type" type="radio" value="flipbook-tool" disabled class="w-4 h-4 text-violet-600 focus:ring-violet-500 disabled:opacity-50">
+                                        <label for="q2-a-flipbook" class="ml-3 block font-medium">a) Dùng phần mềm tạo Flipbook (Ví dụ: FlipHTML5, PubHTML5)</label>
+                                    </div>
+                                    <div id="q2-a-details" class="ml-7 hidden transition-all duration-300">
+                                        <p class="text-sm text-violet-700 font-semibold">Ưu điểm:</p>
+                                        <textarea id="q2-a-pros" class="answer-box mb-2" rows="2" placeholder="Ưu điểm..."></textarea>
+                                        <p class="text-sm text-violet-700 font-semibold">Hạn chế:</p>
+                                        <textarea id="q2-a-cons" class="answer-box" rows="2" placeholder="Hạn chế..."></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="p-4 rounded-xl bg-white/30 border border-white/40">
+                                    <div class="flex items-center mb-2">
+                                        <input id="q2-b-website" name="tool-type" type="radio" value="website-tool" disabled class="w-4 h-4 text-violet-600 focus:ring-violet-500 disabled:opacity-50">
+                                        <label for="q2-b-website" class="ml-3 block font-medium">b) Dùng công cụ lập trình web (Ví dụ: HTML, CSS, Javascript)</label>
+                                    </div>
+                                    <div id="q2-b-details" class="ml-7 hidden transition-all duration-300">
+                                        <p class="text-sm text-violet-700 font-semibold">Ưu điểm:</p>
+                                        <textarea id="q2-b-pros" class="answer-box mb-2" rows="2" placeholder="Ưu điểm..."></textarea>
+                                        <p class="text-sm text-violet-700 font-semibold">Hạn chế:</p>
+                                        <textarea id="q2-b-cons" class="answer-box" rows="2" placeholder="Hạn chế..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p class="font-medium">3. Xác định thời gian hoàn thành?</p>
+                            <textarea class="answer-box" rows="2" placeholder="Nhập câu trả lời của bạn..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phần 3: Nhiệm vụ kiến tạo -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 3: Nhiệm vụ kiến tạo</h3>
+                    <p class="text-slate-700 mb-4">Lập kế hoạch thiết kế và tái lập nội dung số theo hướng dẫn:</p>
+                    <div class="overflow-x-auto mt-4 rounded-xl border border-white/50">
+                        <table class="min-w-full divide-y divide-gray-200/50">
+                            <thead class="bg-violet-50/50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-violet-800 uppercase tracking-wider w-1/3">Yêu cầu</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-violet-800 uppercase tracking-wider w-2/3">Kế hoạch chi tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200/50 bg-white/40 text-slate-700">
+                                <tr>
+                                    <td class="px-6 py-4 font-medium align-top">Xác định cấu trúc nội dung</td>
+                                    <td class="px-6 py-2">
+                                        <textarea class="answer-box" rows="3" placeholder="Liệt kê các chủ đề/mục tiêu kiến thức..."></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 font-medium align-top">Xác định vai trò của nội dung số</td>
+                                    <td class="px-6 py-2">
+                                        <textarea class="answer-box" rows="3" placeholder="Mô tả cách nội dung giúp HS khám phá..."></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 font-medium align-top">"Xác định nguồn lực, công cụ"</td>
+                                    <td class="px-6 py-2">
+                                        <textarea class="answer-box" rows="3" placeholder="Liệt kê tài liệu tham khảo, công cụ số..."></textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Phần 4: Thử thách sáng tạo -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 4: Thử thách sáng tạo</h3>
+                    <p class="text-slate-700 leading-relaxed">
+                        Theo kế hoạch đã lập, thiết kế sản phẩm nội dung số tích hợp (Flipbook hoặc Website) và nộp lại link.
+                    </p>
+                    <div class="mt-4 p-4 bg-white/30 rounded-xl border border-white/40 space-y-3">
+                        <p class="text-slate-700 font-bold">Sản phẩm: Nộp lại 01 đường link (URL) sản phẩm hoàn chỉnh.</p>
+                        <input type="text" class="answer-box bg-white/80" placeholder="Dán đường link (URL) sản phẩm của bạn tại đây...">
+                        <textarea class="answer-box bg-white/80" rows="5" placeholder="Viết đoạn phản tư của bạn về sản phẩm..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trang: Bài tập 3 -->
+            <div id="page-bt3" class="page-content space-y-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-3xl font-bold text-slate-800 drop-shadow-sm">Bài tập 3: Lập trình</h2>
+                    <a href="#" class="print-exercise-button p-3 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-center shadow-lg hover:shadow-emerald-300/50 transition-all duration-200 hover:-translate-y-0.5">
+                        In Bài 3 / Xuất PDF
+                    </a>
+                </div>
+
+                <!-- Phần 1: Tình huống sư phạm -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 1: Tình huống sư phạm</h3>
+                    <p class="text-slate-700 leading-relaxed">
+                        Bạn cần thiết kế một mô hình mô phỏng cơ chế tái bản DNA bằng HTML + CSS + Javascript để học sinh có thể trực quan hóa và thao tác. Bạn quyết định sử dụng AI để hỗ trợ lập trình. Làm thế nào để ra lệnh cho AI một cách hiệu quả nhất để nó tạo ra một sản phẩm code chính xác và có tính sư phạm? Làm thế nào để khắc phục lỗi code khi AI tạo ra sản phẩm bị lỗi?
+                    </p>
+                </div>
+
+                <!-- Phần 2: Thiết lập nền tảng -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 2: Thiết lập nền tảng</h3>
+                    <div class="space-y-5 text-slate-700">
+                        <div>
+                            <p class="font-medium">1. Xác định mục tiêu nội dung/chủ đề lập trình?</p>
+                            <textarea class="answer-box" rows="3" placeholder="Nhập câu trả lời của bạn..."></textarea>
+                        </div>
+                        <p class="font-medium">2. Xác định các công cụ lập trình sẽ sử dụng?</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 ml-2 mt-2 p-3 rounded-xl bg-white/30">
+                            <div class="flex items-center"><input id="bt3-tool-html" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt3-tool-html" class="ml-3">HTML / CSS / Javascript</label></div>
+                            <div class="flex items-center"><input id="bt3-tool-p5" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt3-tool-p5" class="ml-3">p5.js (Thư viện mô phỏng)</label></div>
+                            <div class="flex items-center"><input id="bt3-tool-three" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt3-tool-three" class="ml-3">three.js (Thư viện 3D)</label></div>
+                            <div class="flex items-center"><input id="bt3-tool-other" type="checkbox" class="w-4 h-4 text-violet-600 rounded"><label for="bt3-tool-other" class="ml-3">Công cụ khác</label></div>
+                        </div>
+                        <div>
+                            <p class="font-medium">3. Thời gian hoàn thành sản phẩm lập trình?</p>
+                            <textarea class="answer-box" rows="2" placeholder="Nhập câu trả lời của bạn..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phần 3: Nhiệm vụ kiến tạo -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 3: Nhiệm vụ kiến tạo</h3>
+                    <div class="space-y-5 text-slate-700">
+                        <div>
+                            <p class="font-medium">1. Lập kế hoạch chi tiết cho sản phẩm lập trình:</p>
+                            <textarea class="answer-box" rows="4" placeholder="Mô tả các thành phần, chức năng, giao diện..."></textarea>
+                        </div>
+                        <div>
+                            <p class="font-medium">2. Xác định các bước dò lỗi code (debugging) khi sản phẩm bị lỗi:</p>
+                            <textarea class="answer-box" rows="3" placeholder="Liệt kê các bước dò lỗi..."></textarea>
+                        </div>
+                        <div>
+                            <p class="font-medium">3. Viết Prompt (câu lệnh) cho AI để tạo code:</p>
+                            <p class="p-4 bg-white/40 rounded-xl border border-violet-200 text-sm mt-2 italic text-slate-600">
+                                <strong>(Prompt mẫu):</strong> "Hãy viết code p5.js mô phỏng 4 giai đoạn tái bản DNA, có enzyme là hình tròn, có âm thanh click..."
+                            </p>
+                            <textarea id="bt3-prompt-answer" class="answer-box" rows="6" placeholder="Viết prompt của bạn tại đây..."></textarea>
+                            
+                            <!-- NÚT TÍCH HỢP GEMINI API -->
+                            <div class="mt-4 text-right">
+                                <button type="button" id="gemini-improve-prompt-btn" class="glass-btn py-2 px-5 rounded-xl font-semibold text-white">
+                                    ✨ Cải thiện Prompt (với Gemini)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phần 4: Thử thách sáng tạo -->
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Phần 4: Thử thách sáng tạo</h3>
+                    
+                    <div class="p-4 bg-indigo-50/50 rounded-xl border border-indigo-100 mb-4">
+                        <p class="text-slate-700 leading-relaxed">
+                            <strong>Đề bài:</strong> Tích hợp công cụ HTML + CSS + Javascript - hoclaptrinh.io – Github để thiết kế mô phỏng cơ chế tái bản DNA và hướng dẫn/ kế hoạch giáo dục định hướng HS phát triển năng lực STEM.
+                        </p>
+                    </div>
+                    
+                    <p class="text-slate-700">Sản phẩm mẫu: <a href="https://myletoday-oss.github.io/Fubao/" target="_blank" class="text-violet-600 hover:text-violet-800 hover:underline font-medium">Link tham khảo Fubao</a></p>
+                    
+                    <div class="mt-6 p-4 bg-white/30 rounded-xl border border-white/40 space-y-3">
+                        <p class="text-slate-700 font-bold">Sản phẩm: Nộp lại 01 link GitHub Pages (sản phẩm mẫu) VÀ 01 đoạn phản tư sư phạm.</p>
+                        <input type="text" class="answer-box bg-white/80" placeholder="Dán link GitHub Pages tại đây...">
+                        <textarea class="answer-box bg-white/80" rows="5" placeholder="Viết đoạn phản tư sư phạm của bạn tại đây..."></textarea>
+                    </div>
+                </div>
+            </div>
             
-            const [currentQuiz, setCurrentQuiz] = useState(0);
-            const [isFlipped, setIsFlipped] = useState(false);
-            const [currentSituation, setCurrentSituation] = useState(0);
-            const [isSituationFlipped, setIsSituationFlipped] = useState(false);
-            const [timeLeft, setTimeLeft] = useState(60);
-            const [isRunning, setIsRunning] = useState(false);
-            const [notes, setNotes] = useState([]);
-            const [newNoteName, setNewNoteName] = useState("");
-            const [newNoteContent, setNewNoteContent] = useState("");
+        </main>
+    </div>
 
-            useEffect(() => {
-                let interval;
-                if (isRunning && timeLeft > 0) interval = setInterval(() => setTimeLeft(t => t - 1), 1000);
-                else if (timeLeft === 0) setIsRunning(false);
-                return () => clearInterval(interval);
-            }, [isRunning, timeLeft]);
-
-            const updateScore = (team, delta) => setScores(p => ({...p, [team]: Math.max(0, p[team] + delta)}));
-
-            // --- RENDERERS ---
-
-            const ScoreBoard = () => (
-                <div className="flex justify-center gap-4 mb-6 flex-wrap">
-                    {[1, 2, 3, 4].map(id => (
-                        <div key={id} className="glass-card p-3 rounded-xl w-32 flex flex-col items-center border-t-2 border-white/40 shadow-lg">
-                            <span className="text-xs font-bold tracking-widest uppercase opacity-80">Đội {id}</span>
-                            <span className="text-3xl font-black my-1">{scores[id]}</span>
-                            <div className="flex gap-2">
-                                <button onClick={() => updateScore(id, -10)} className="w-6 h-6 rounded-full bg-white/20 hover:bg-red-500 hover:text-white flex items-center justify-center text-xs transition">-</button>
-                                <button onClick={() => updateScore(id, 10)} className="w-6 h-6 rounded-full bg-white/20 hover:bg-green-500 hover:text-white flex items-center justify-center text-xs transition">+</button>
-                            </div>
-                        </div>
-                    ))}
+    <!-- Modal cho Tính năng Gemini (Glass Style) -->
+    <div id="gemini-modal" class="modal-overlay">
+        <div class="modal-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <h3 id="gemini-modal-title" class="modal-title">Kết quả từ Gemini</h3>
+                <button id="gemini-modal-close" class="text-slate-400 hover:text-slate-600 focus:outline-none transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <!-- Body -->
+            <div id="gemini-modal-body-content" class="modal-body-container">
+                <div class="flex justify-center items-center h-24">
+                    <div class="modal-spinner"></div>
                 </div>
-            );
+            </div>
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button id="gemini-modal-close-footer" class="px-5 py-2 bg-slate-200/80 text-slate-700 rounded-lg font-medium hover:bg-slate-300 transition-colors duration-200 backdrop-blur-sm">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
 
-            const Timer = () => (
-                <div className="glass-card px-6 py-3 rounded-full flex items-center gap-6 mx-auto w-fit mb-6 shadow-xl border-2 border-white/30 bg-white/10 backdrop-blur-md">
-                    <div className="flex items-center gap-2">
-                        <div className={`p-2 rounded-full ${isRunning ? 'animate-spin' : ''} bg-white/20`}>{Icons.Clock}</div>
-                        <span className="text-3xl font-black w-16 text-center tabular-nums">{timeLeft}s</span>
-                    </div>
-                    <div className="h-8 w-px bg-white/30"></div>
-                    <div className="flex gap-2">
-                        <button onClick={() => setIsRunning(!isRunning)} className="px-4 py-1 rounded-full bg-white text-blue-600 font-bold hover:bg-blue-50 transition text-sm uppercase">
-                            {isRunning ? "Dừng" : "Bắt đầu"}
-                        </button>
-                        <button onClick={() => {setIsRunning(false); setTimeLeft(60);}} className="p-2 rounded-full bg-white/20 hover:bg-white/40 transition">
-                            {Icons.RotateCcw}
-                        </button>
-                    </div>
-                </div>
-            );
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page-content');
 
-            // Welcome Screen
-            if (phase === 'welcome') return (
-                <div className="min-h-screen flex flex-col items-center justify-center relative z-10 p-4 text-center">
-                    <div className="glass-card p-12 rounded-3xl animate-float border-2 border-white/50 shadow-[0_0_50px_rgba(255,255,255,0.3)]">
-                        <div className="mb-6 flex justify-center">
-                            <div className="bg-white text-pink-500 p-6 rounded-full shadow-lg transform scale-125">
-                                {Icons.Target}
-                            </div>
-                        </div>
-                        <h1 className="text-5xl md:text-7xl font-black mb-4 tracking-tight drop-shadow-sm">
-                            THE BETTER ME
-                        </h1>
-                        <h2 className="text-xl md:text-2xl font-medium mb-8 opacity-90 tracking-widest uppercase">
-                            Phiên bản hoàn hảo
-                        </h2>
-                        
-                        <button 
-                            onClick={() => setPhase('round1')}
-                            className="btn-modern px-12 py-5 text-xl w-full flex items-center justify-center gap-3"
-                        >
-                            Khởi động {Icons.Zap}
-                        </button>
-                    </div>
-                </div>
-            );
+            // Hàm để hiển thị trang và cập nhật link active
+            function showPage(targetId) {
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                const targetPage = document.getElementById(targetId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.target === targetId) {
+                        link.classList.add('active');
+                    }
+                });
+            }
 
-            // Round 1
-            if (phase === 'round1') return (
-                <div className="min-h-screen p-4 flex flex-col relative z-10">
-                    <div className="flex justify-between items-center mb-6 px-4">
-                        <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-2 drop-shadow-md">
-                            {Icons.Brain} VÒNG 1: GIẢI MÃ
-                        </h2>
-                        <div className="text-sm font-bold bg-white/20 px-4 py-2 rounded-full border border-white/30">
-                            Câu {currentQuiz + 1}/{quizData.length}
-                        </div>
-                    </div>
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = e.currentTarget.dataset.target;
+                    showPage(targetId);
+                });
+            });
 
-                    <ScoreBoard />
-                    <Timer />
+            showPage('page-home');
 
-                    <div className="flex-1 flex flex-col items-center justify-center py-4">
-                        <div className="perspective-1000 w-full max-w-2xl h-80 cursor-pointer group" onClick={() => setIsFlipped(!isFlipped)}>
-                            <div className={`card-inner ${isFlipped ? 'flipped' : ''}`}>
-                                {/* FRONT */}
-                                <div className="card-front glass-card flex flex-col items-center justify-center p-8 bg-white/80 text-blue-900 shadow-2xl">
-                                    <div className="bg-blue-100 p-4 rounded-full mb-6 text-blue-600">
-                                        {Icons.Lock}
-                                    </div>
-                                    <h3 className="text-gray-500 text-sm tracking-widest mb-4 font-bold uppercase">Dữ kiện bí ẩn</h3>
-                                    <p className="text-2xl md:text-3xl font-bold text-center leading-relaxed drop-shadow-sm">
-                                        "{quizData[currentQuiz].hint}"
-                                    </p>
-                                    <div className="mt-8 text-xs text-blue-500 font-bold animate-bounce bg-blue-50 px-4 py-2 rounded-full">
-                                        NHẤN ĐỂ LẬT THẺ
-                                    </div>
-                                </div>
+            // --- Logic cho Bài tập 2 ---
+            const q1Radios = document.querySelectorAll('input[name="hoc-lieu-type"]');
+            const q2aRadio = document.getElementById('q2-a-flipbook');
+            const q2aDetails = document.getElementById('q2-a-details');
+            const q2aLabel = document.querySelector('label[for="q2-a-flipbook"]');
+            const q2bRadio = document.getElementById('q2-b-website');
+            const q2bDetails = document.getElementById('q2-b-details');
+            const q2bLabel = document.querySelector('label[for="q2-b-website"]');
+            
+            q1Radios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const selectedValue = e.target.value;
+                    if (selectedValue === 'flipbook') {
+                        q2aRadio.disabled = false; q2aRadio.checked = true;
+                        q2aLabel.classList.remove('cursor-not-allowed', 'text-gray-500');
+                        q2aDetails.classList.remove('hidden');
+                        q2bRadio.disabled = true; q2bRadio.checked = false;
+                        q2bLabel.classList.add('cursor-not-allowed', 'text-gray-500');
+                        q2bDetails.classList.add('hidden');
+                    } else if (selectedValue === 'website') {
+                        q2bRadio.disabled = false; q2bRadio.checked = true;
+                        q2bLabel.classList.remove('cursor-not-allowed', 'text-gray-500');
+                        q2bDetails.classList.remove('hidden');
+                        q2aRadio.disabled = true; q2aRadio.checked = false;
+                        q2aLabel.classList.add('cursor-not-allowed', 'text-gray-500');
+                        q2aDetails.classList.add('hidden');
+                    }
+                });
+            });
+            
+            // --- Logic cho nút In ---
+            const printButtons = document.querySelectorAll('.print-exercise-button');
+            printButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.print();
+                });
+            });
 
-                                {/* BACK */}
-                                <div className="card-back glass-card flex flex-col items-center justify-center p-8 bg-gradient-to-br from-indigo-600 to-purple-700 text-white shadow-2xl border-4 border-white/20">
-                                    <div className="absolute top-4 right-4 text-xs font-bold bg-white/20 px-2 py-1 rounded">ĐÁP ÁN</div>
-                                    <div className="bg-white/20 p-4 rounded-full mb-4">
-                                        {Icons.Unlock}
-                                    </div>
-                                    <h3 className="text-4xl md:text-5xl font-black mb-4 text-center drop-shadow-md text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-white">
-                                        {quizData[currentQuiz].answer}
-                                    </h3>
-                                    <p className="text-lg opacity-90 italic text-center border-t border-white/20 pt-4 w-full">
-                                        "{quizData[currentQuiz].desc}"
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+            // --- LOGIC TÍCH HỢP GEMINI API ---
+            const modal = document.getElementById('gemini-modal');
+            const modalCloseBtn = document.getElementById('gemini-modal-close');
+            const modalCloseFooterBtn = document.getElementById('gemini-modal-close-footer');
+            const modalTitle = document.getElementById('gemini-modal-title');
+            const modalBody = document.getElementById('gemini-modal-body-content');
+            const spinnerHTML = `<div class="flex justify-center items-center h-24"><div class="modal-spinner"></div></div>`;
 
-                        <div className="mt-8 flex gap-4">
-                            <button 
-                                onClick={() => { setIsFlipped(false); setCurrentQuiz(Math.max(0, currentQuiz - 1)); }}
-                                disabled={currentQuiz === 0}
-                                className="px-6 py-3 rounded-full bg-white/20 hover:bg-white/30 font-bold transition disabled:opacity-30"
-                            >
-                                Câu trước
-                            </button>
-                            <button 
-                                onClick={() => {
-                                    if (currentQuiz < quizData.length - 1) {
-                                        setIsFlipped(false);
-                                        setCurrentQuiz(currentQuiz + 1);
-                                    } else {
-                                        setPhase('round2');
-                                        setTimeLeft(60);
-                                        setIsRunning(false);
-                                    }
-                                }}
-                                className="px-8 py-3 rounded-full bg-white text-purple-700 font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition flex items-center gap-2"
-                            >
-                                {currentQuiz < quizData.length - 1 ? "Câu tiếp theo" : "Qua Vòng 2"} {Icons.ChevronRight}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            );
+            function simpleMarkdownParser(text) {
+                if (!text) return '';
+                let html = text;
+                html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+                html = html.replace(/^## (.*$)/gim, '<h3>$1</h3>');
+                html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
+                html = html.replace(/^\* (.*$)/gim, '<ul><li>$1</li></ul>');
+                html = html.replace(/^- (.*$)/gim, '<ul><li>$1</li></ul>');
+                html = html.replace(/<\/ul>\s*<ul>/gim, '');
+                html = html.replace(/\n/gim, '<br>');
+                return `<div class="markdown-content modal-body-text">${html}</div>`;
+            }
 
-            // Round 2
-            if (phase === 'round2') return (
-                <div className="min-h-screen p-4 flex flex-col relative z-10">
-                    <div className="flex justify-between items-center mb-6 px-4">
-                        <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-2 drop-shadow-md">
-                            {Icons.Users} VÒNG 2: CỐ VẤN
-                        </h2>
-                        <button onClick={() => setPhase('round3')} className="text-sm font-bold bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition">Qua Vòng 3 &rarr;</button>
-                    </div>
+            function openModal(title) {
+                modalTitle.textContent = title;
+                modalBody.innerHTML = spinnerHTML;
+                modal.classList.add('active');
+            }
 
-                    <ScoreBoard />
-                    <Timer />
+            function closeModal() {
+                modal.classList.remove('active');
+            }
+            
+            modalCloseBtn.addEventListener('click', closeModal);
+            if(modalCloseFooterBtn) modalCloseFooterBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-                    <div className="flex-1 flex flex-col items-center mt-4">
-                        <div className="perspective-1000 w-full max-w-4xl h-[500px] cursor-pointer" onClick={() => setIsSituationFlipped(!isSituationFlipped)}>
-                            <div className={`card-inner ${isSituationFlipped ? 'flipped' : ''}`}>
-                                {/* Front */}
-                                <div className="card-front glass-card flex flex-col items-center justify-center p-10 bg-white/90 text-gray-800 shadow-2xl border-4 border-yellow-400">
-                                    <div className="absolute top-0 right-0 p-4 bg-yellow-400 text-black font-black text-sm tracking-widest transform rotate-0 rounded-bl-xl">TOP SECRET</div>
-                                    <div className="w-24 h-24 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mb-6 animate-pulse shadow-inner">
-                                        <span className="text-5xl font-black">?</span>
-                                    </div>
-                                    <h3 className="text-5xl font-black text-gray-800 mb-2 tracking-tighter uppercase">{situationData[currentSituation].title}</h3>
-                                    <p className="text-gray-500 text-sm mt-4 font-bold uppercase tracking-widest bg-gray-100 px-4 py-2 rounded-full">Chạm để mở hồ sơ</p>
-                                </div>
+            async function callGeminiAPI(userPrompt, systemPrompt = "", maxRetries = 3) {
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                const payload = { contents: [{ parts: [{ text: userPrompt }] }], systemInstruction: systemPrompt ? { parts: [{ text: systemPrompt }] } : undefined };
 
-                                {/* Back */}
-                                <div className="card-back glass-card flex flex-col p-12 bg-gray-900 text-white shadow-2xl border-4 border-white/20">
-                                    <div className="flex items-center gap-3 mb-8 border-b border-gray-700 pb-4">
-                                        <div className="w-2 h-10 bg-gradient-to-b from-pink-500 to-purple-500 rounded-full"></div>
-                                        <div>
-                                            <div className="text-xs text-gray-400 font-bold uppercase tracking-wider">Chủ đề</div>
-                                            <div className={`text-2xl font-black ${situationData[currentSituation].color}`}>{situationData[currentSituation].theme}</div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="flex-1 flex items-center justify-center">
-                                        <p className="text-2xl md:text-4xl leading-snug font-medium text-center">
-                                            "{situationData[currentSituation].content}"
-                                        </p>
-                                    </div>
+                let attempt = 0; let delay = 1000;
+                while (attempt < maxRetries) {
+                    try {
+                        const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                        if (!response.ok) { const errorResult = await response.json(); return { error: `Lỗi API: ${errorResult.error?.message || response.statusText}` }; }
+                        const result = await response.json();
+                        const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                        if (text) return { text: simpleMarkdownParser(text) };
+                        else return { error: "Không nhận được nội dung hợp lệ từ API." };
+                    } catch (error) {
+                        attempt++; if (attempt >= maxRetries) return { error: `Đã hết số lần thử. Lỗi cuối cùng: ${error.message}` };
+                        await new Promise(resolve => setTimeout(resolve, delay)); delay *= 2;
+                    }
+                }
+                return { error: "Đã xảy ra lỗi không xác định." };
+            }
 
-                                    <div className="mt-8 flex justify-center w-full">
-                                        <div className="flex items-center gap-3 text-sm font-bold bg-white/10 px-6 py-3 rounded-full border border-white/20 shadow-lg">
-                                            {Icons.MessageSquare} Ý KIẾN CỦA BẠN
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            // Event Listeners Gemini
+            const suggestPlanBtn = document.getElementById('gemini-suggest-plan-btn');
+            if (suggestPlanBtn) {
+                suggestPlanBtn.addEventListener('click', async () => {
+                    const topic = document.getElementById('bt1-q1-answer').value;
+                    if (!topic.trim()) { alert("Vui lòng nhập Mục tiêu/Chủ đề (Phần 2, Câu 1) trước."); return; }
+                    openModal("Đang tạo gợi ý kế hoạch...");
+                    const systemPrompt = "Bạn là chuyên gia thiết kế E-learning.";
+                    const userPrompt = `Lập kế hoạch E-learning 5 bước cho chủ đề: "${topic}". Dùng định dạng Markdown đơn giản.`;
+                    const result = await callGeminiAPI(userPrompt, systemPrompt);
+                    modalTitle.textContent = result.error ? "Lỗi" : "✨ Gợi ý Kế hoạch E-learning";
+                    modalBody.innerHTML = result.error || result.text;
+                });
+            }
 
-                        <div className="mt-8 flex gap-4 z-20">
-                            <button 
-                                onClick={() => { setIsSituationFlipped(false); setCurrentSituation(Math.max(0, currentSituation - 1)); }}
-                                disabled={currentSituation === 0}
-                                className="px-6 py-3 rounded-full bg-white/20 hover:bg-white/30 font-bold transition disabled:opacity-30"
-                            >
-                                Hồ sơ trước
-                            </button>
-                            <button 
-                                onClick={() => {
-                                    if (currentSituation < situationData.length - 1) {
-                                        setIsSituationFlipped(false);
-                                        setCurrentSituation(currentSituation + 1);
-                                        setTimeLeft(60); setIsRunning(false);
-                                    } else {
-                                        setPhase('round3');
-                                    }
-                                }}
-                                className="px-8 py-3 rounded-full bg-white text-purple-700 font-bold shadow-lg hover:shadow-xl hover:-translate-y-1 transition flex items-center gap-2"
-                            >
-                                Hồ sơ tiếp {Icons.ChevronRight}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            );
+            const generateQuizBtn = document.getElementById('gemini-generate-quiz-btn');
+            if (generateQuizBtn) {
+                generateQuizBtn.addEventListener('click', async () => {
+                    const topic = document.getElementById('bt1-q1-answer').value;
+                    if (!topic.trim()) { alert("Vui lòng nhập Mục tiêu/Chủ đề (Phần 2, Câu 1) trước."); return; }
+                    openModal("Đang tạo câu hỏi Quiz...");
+                    const systemPrompt = "Bạn là giáo viên Sinh học.";
+                    const userPrompt = `Tạo 3 câu hỏi trắc nghiệm về chủ đề: "${topic}". Dùng định dạng Markdown.`;
+                    const result = await callGeminiAPI(userPrompt, systemPrompt);
+                    modalTitle.textContent = result.error ? "Lỗi" : "✨ Gợi ý 3 câu hỏi Quiz (H5P)";
+                    modalBody.innerHTML = result.error || result.text;
+                });
+            }
 
-            // Round 3
-            if (phase === 'round3') return (
-                <div className="min-h-screen p-4 flex flex-col relative z-10">
-                    <div className="flex justify-between items-center mb-6 px-4">
-                        <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-2 drop-shadow-md">
-                            {Icons.Target} VÒNG 3: MỤC TIÊU
-                        </h2>
-                        <button onClick={() => setPhase('welcome')} className="text-sm font-bold bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition">Về trang chủ</button>
-                    </div>
+            const toolAnalysisBtn = document.getElementById('gemini-tool-analysis-btn');
+            if (toolAnalysisBtn) {
+                toolAnalysisBtn.addEventListener('click', async () => {
+                    let selectedTool = "";
+                    if (document.getElementById('q1-flipbook').checked) selectedTool = "Flipbook";
+                    else if (document.getElementById('q1-website').checked) selectedTool = "Website";
+                    else { alert("⚠️ Vui lòng chọn 'Flipbook' hoặc 'Website' ở Câu 1 trước."); return; }
+                    openModal("Đang phân tích công cụ...");
+                    const systemPrompt = "Bạn là chuyên gia EdTech.";
+                    const userPrompt = `Phân tích Ưu/Nhược điểm của "${selectedTool}" trong dạy học Sinh học. Dùng Markdown.`;
+                    const result = await callGeminiAPI(userPrompt, systemPrompt);
+                    modalTitle.textContent = result.error ? "Lỗi" : `✨ Phân tích: ${selectedTool}`;
+                    modalBody.innerHTML = result.error || result.text;
+                });
+            }
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full flex-1">
-                        {/* Input Panel */}
-                        <div className="lg:col-span-4">
-                            <div className="glass-card h-full p-6 bg-white/80 text-gray-800 shadow-xl">
-                                <h3 className="text-xl font-black text-purple-600 mb-6 border-b border-gray-200 pb-4 uppercase">Nhập thông tin</h3>
-                                <form onSubmit={(e) => {
-                                    e.preventDefault();
-                                    if (newNoteName && newNoteContent) {
-                                        const styles = [
-                                            'bg-yellow-100 text-yellow-800 rotate-1', 
-                                            'bg-green-100 text-green-800 -rotate-1', 
-                                            'bg-pink-100 text-pink-800 rotate-2', 
-                                            'bg-blue-100 text-blue-800 -rotate-2'
-                                        ];
-                                        const randomStyle = styles[Math.floor(Math.random() * styles.length)];
-                                        setNotes([...notes, { name: newNoteName, content: newNoteContent, style: randomStyle, id: Date.now() }]);
-                                        setNewNoteName(""); setNewNoteContent("");
-                                    }
-                                }}>
-                                    <div className="mb-4">
-                                        <label className="text-xs font-bold text-gray-500 mb-2 block uppercase">Tên / Đội</label>
-                                        <input 
-                                            type="text" 
-                                            value={newNoteName}
-                                            onChange={(e) => setNewNoteName(e.target.value)}
-                                            className="w-full bg-gray-50 border-2 border-gray-200 rounded-xl p-3 text-gray-800 focus:border-purple-500 focus:outline-none transition-all font-bold"
-                                            placeholder="Ví dụ: Đội 1..."
-                                        />
-                                    </div>
-                                    <div className="mb-6">
-                                        <label className="text-xs font-bold text-gray-500 mb-2 block uppercase">Mục tiêu của bạn</label>
-                                        <textarea 
-                                            value={newNoteContent}
-                                            onChange={(e) => setNewNoteContent(e.target.value)}
-                                            className="w-full h-32 bg-gray-50 border-2 border-gray-200 rounded-xl p-3 text-gray-800 focus:border-purple-500 focus:outline-none transition-all"
-                                            placeholder="Tôi cam kết sẽ..."
-                                        ></textarea>
-                                    </div>
-                                    <button type="submit" className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-black uppercase tracking-wider hover:shadow-lg hover:-translate-y-1 transition flex items-center justify-center gap-2">
-                                        {Icons.Plus} Dán lên bảng
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-
-                        {/* The Wall */}
-                        <div className="lg:col-span-8">
-                            <div className="glass-card h-full min-h-[500px] p-8 rounded-2xl border-4 border-dashed border-white/20 relative overflow-y-auto">
-                                <div className="absolute top-4 right-6 text-sm font-bold text-white/50 uppercase tracking-widest">Bảng Mục Tiêu Lớp Học</div>
-                                
-                                {notes.length === 0 ? (
-                                    <div className="h-full flex flex-col items-center justify-center text-white/40">
-                                        <div className="text-6xl mb-4 opacity-50">{Icons.MessageSquare}</div>
-                                        <p className="font-bold text-lg">Chưa có mục tiêu nào được dán.</p>
-                                        <p className="text-sm">Hãy là người đầu tiên!</p>
-                                    </div>
-                                ) : (
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 content-start mt-8">
-                                        {notes.map(note => (
-                                            <div key={note.id} className={`p-6 rounded-lg shadow-xl animate-float cursor-pointer hover:scale-105 transition-transform duration-300 ${note.style}`}>
-                                                <div className="w-3 h-3 rounded-full bg-black/10 mx-auto mb-4"></div>
-                                                <div className="font-black text-lg mb-2 border-b border-black/10 pb-2">{note.name}</div>
-                                                <p className="font-medium leading-relaxed font-serif italic">"{note.content}"</p>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            );
-
-            return <div className="text-white">{phase}</div>; 
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+            const improvePromptBtn = document.getElementById('gemini-improve-prompt-btn');
+            if (improvePromptBtn) {
+                improvePromptBtn.addEventListener('click', async () => {
+                    const userPromptText = document.getElementById('bt3-prompt-answer').value;
+                    if (!userPromptText.trim()) { alert("Vui lòng nhập nội dung prompt của bạn trước."); return; }
+                    openModal("Đang cải thiện prompt...");
+                    const systemPrompt = "Bạn là kỹ sư prompt AI.";
+                    const apiPrompt = `Cải thiện prompt sau để tạo code p5.js sinh học: "${userPromptText}". Trả lời bằng Markdown.`;
+                    const result = await callGeminiAPI(apiPrompt, systemPrompt);
+                    modalTitle.textContent = result.error ? "Lỗi" : "✨ Prompt đã được cải thiện";
+                    modalBody.innerHTML = result.error || result.text;
+                });
+            }
+        });
     </script>
 </body>
 </html>
