@@ -99,6 +99,9 @@
         .glass-btn-pink {
             background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
         }
+        .glass-btn-teal {
+            background: linear-gradient(135deg, #2dd4bf 0%, #06b6d4 100%);
+        }
 
         /* Ẩn tất cả các trang nội dung theo mặc định */
         .page-content { 
@@ -150,7 +153,7 @@
             box-shadow: 0 0 0 3px rgba(196, 181, 253, 0.5);
         }
 
-        /* --- CSS cho Modal và Spinner (Giữ nguyên logic, thay đổi giao diện) --- */
+        /* --- CSS cho Modal và Spinner --- */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -237,51 +240,41 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Kiểu CSS cho bản in - Reset về đen trắng */
+        /* Kiểu CSS cho bản in */
         @media print {
-            body {
-                font-family: 'Times New Roman', Times, serif;
-                font-size: 12pt;
-                color: #000;
-                background: none !important;
-            }
-            .glass-panel, .glass-sidebar, .modal-content {
-                background: none !important;
-                border: none !important;
-                box-shadow: none !important;
-                backdrop-filter: none !important;
-                animation: none !important; /* Tắt animation khi in */
-            }
-            nav, .print-exercise-button, button {
-                display: none !important;
-            }
-            main {
-                padding: 0 !important;
-                margin: 0 !important;
-                width: 100% !important;
-            }
-            .page-content {
-                display: none !important;
-            }
-            .page-content.active {
-                display: block !important;
-            }
-            .bg-white, .bg-gray-100 {
-                background-color: #fff !important;
-            }
-            .text-indigo-700, .text-green-700, .text-gray-700 {
-                color: #000 !important;
-            }
-            table, th, td {
-                border: 1px solid #ccc !important;
-            }
-            .answer-box {
-                border: 1px dashed #999 !important;
-                background: #fff !important;
-            }
-            #q2-a-details.hidden, #q2-b-details.hidden {
-                display: none !important;
-            }
+            body { font-family: 'Times New Roman', Times, serif; color: #000; background: none !important; }
+            .glass-panel, .glass-sidebar, .modal-content { background: none !important; border: none !important; box-shadow: none !important; backdrop-filter: none !important; animation: none !important; }
+            nav, .print-exercise-button, button { display: none !important; }
+            main { padding: 0 !important; margin: 0 !important; width: 100% !important; }
+            .page-content { display: none !important; }
+            .page-content.active { display: block !important; }
+            .answer-box { border: 1px dashed #999 !important; background: #fff !important; }
+            #q2-a-details.hidden, #q2-b-details.hidden { display: none !important; }
+        }
+        
+        /* Tiêu đề nhóm Sidebar */
+        .sidebar-group-title {
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #6b7280;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            padding-left: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Label Phase */
+        .phase-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255,255,255,0.5);
+            color: #4b5563;
         }
     </style>
 </head>
@@ -290,57 +283,154 @@
     <div class="flex flex-col md:flex-row min-h-screen">
         
         <!-- Thanh điều hướng bên (Sidebar Glass) -->
-        <nav class="w-full md:w-72 glass-sidebar p-5 space-y-3 shrink-0 flex flex-col z-10">
-            <div>
-                <h1 class="text-2xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-pink-600">
-                    Năng lực Sáng tạo NDS
-                </h1>
-                <a href="#" class="nav-link active block p-3 text-sm" data-target="page-home">
-                    Trang chủ
-                </a>
-                <a href="#" class="nav-link block p-3 text-sm" data-target="page-bt1">
-                    Bài tập 1: Phát triển NDS
-                </a>
-                <a href="#" class="nav-link block p-3 text-sm" data-target="page-bt2">
-                    Bài tập 2: Tích hợp & Tái lập
-                </a>
-                <a href="#" class="nav-link block p-3 text-sm" data-target="page-bt3">
-                    Bài tập 3: Lập trình
-                </a>
-            </div>
+        <nav class="w-full md:w-72 glass-sidebar p-5 space-y-2 shrink-0 flex flex-col z-10 overflow-y-auto max-h-screen">
+            <h1 class="text-2xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-violet-600 to-pink-600">
+                Năng lực Sáng tạo NDS
+            </h1>
+            <a href="#" class="nav-link active block p-3 text-sm" data-target="page-home">Trang chủ</a>
+
+            <!-- NHÓM 1: PHÁT TRIỂN NDS (3 BÀI CƠ BẢN) -->
+            <div class="sidebar-group-title text-violet-600">Phát triển NDS (Cơ bản)</div>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-basic-1-1">BT 1.1: Thiết kế video (SMART)</a>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-basic-1-2">BT 1.2: Thiết kế Áp phích (Trực quan)</a>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-basic-1-3">BT 1.3: Tạo Animation</a>
+
+            <!-- NHÓM 2: TÍCH HỢP & TÁI LẬP (4 BÀI CƠ BẢN) -->
+            <div class="sidebar-group-title text-pink-600">Tích hợp & Tái lập (Cơ bản)</div>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-basic-2-1">BT 2.1: Infographic (Đồ họa thông tin)</a>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-basic-2-2">BT 2.2: Biên tập lại Video (Lồng tiếng)</a>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-basic-2-3">BT 2.3: Sách điện tử (E-book)</a>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-basic-2-4">BT 2.4: Hành trình số (Truy tìm kiến thức)</a>
+
+            <!-- NHÓM 3: CÁC NĂNG LỰC KHÁC -->
+            <div class="sidebar-group-title text-slate-500">Năng lực Bổ trợ</div>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-basic-3">BT 3: Bản quyền số (Luật Bản quyền)</a>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-basic-4">BT 4: Tư duy Lập trình</a>
+
+            <!-- Nhóm Bài tập Nâng cao -->
+            <div class="sidebar-group-title text-emerald-600">Chuyên sâu (Nâng cao)</div>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-bt1">BT Nâng cao 1: E-learning</a>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-bt2">BT Nâng cao 2: Tích hợp</a>
+            <a href="#" class="nav-link block p-3 text-sm" data-target="page-bt3">BT Nâng cao 3: Lập trình</a>
         </nav>
 
         <!-- Khu vực nội dung chính -->
-        <main class="flex-1 p-6 md:p-10 overflow-auto z-0">
+        <main class="flex-1 p-6 md:p-10 overflow-auto z-0 h-screen">
 
             <!-- Trang: Trang chủ -->
             <div id="page-home" class="page-content active space-y-6">
-                <h2 class="text-3xl font-bold text-slate-800 mb-4 drop-shadow-sm">
-                    Chào mừng đến với Nền tảng Bài tập
-                </h2>
+                <h2 class="text-3xl font-bold text-slate-800 mb-4 drop-shadow-sm">Hệ thống Bài tập Cơ bản & Nâng cao</h2>
                 <div class="glass-panel tilt-card p-8 rounded-2xl">
-                    <p class="text-lg text-slate-700 leading-relaxed">
-                        Đây là nền tảng web được thiết kế để hỗ trợ bạn thực hành các bài tập phát triển năng lực sáng tạo nội dung số (NDS).
+                    <p class="text-lg text-slate-700 leading-relaxed mb-4">
+                        Chào mừng bạn đến với nền tảng thực hành NDS. Hệ thống bao gồm 2 cấp độ:
                     </p>
-                    <p class="text-slate-700 leading-relaxed mt-4">
-                        Mỗi bài tập được xây dựng theo cấu trúc 4 giai đoạn:
-                    </p>
-                    <ul class="list-decimal list-inside text-slate-700 mt-4 space-y-2 ml-2">
-                        <li><strong class="text-violet-700">Trải nghiệm cụ thể:</strong> Đặt ra bối cảnh thực tiễn.</li>
-                        <li><strong class="text-violet-700">Quan sát phản tư:</strong> Thiết kế nhiệm vụ để phát triển năng lực.</li>
-                        <li><strong class="text-violet-700">Trừu tượng hóa:</strong> Thiết kế khung nội dung/kế hoạch cho sản phẩm.</li>
-                        <li><strong class="text-violet-700">Thử nghiệm tích cực:</strong> Vận dụng kiến thức để phát triển sản phẩm.</li>
-                    </ul>
-                    <p class="text-slate-700 leading-relaxed mt-6">
-                        Sử dụng thanh điều hướng bên trái để chọn bài tập bạn muốn thực hiện.
-                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="p-4 bg-white/40 rounded-xl border border-white/50">
+                            <h3 class="font-bold text-violet-700 mb-2">🚀 Cơ bản (Khởi động)</h3>
+                            <ul class="list-disc list-inside text-slate-700 text-sm space-y-1">
+                                <li>Phát triển Video, Áp phích, Kịch bản.</li>
+                                <li>Tái lập Đồ họa thông tin, Biên tập Video, Sách điện tử.</li>
+                                <li>Thực hành Bản quyền & Tư duy Lập trình.</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 bg-white/40 rounded-xl border border-white/50">
+                            <h3 class="font-bold text-emerald-600 mb-2">🔥 Nâng cao (Chuyên sâu)</h3>
+                            <ul class="list-disc list-inside text-slate-700 text-sm space-y-1">
+                                <li>Thiết kế E-learning toàn diện (Bài giảng E-learning).</li>
+                                <li>Dự án Tích hợp đa phương tiện (Flipbook/Website).</li>
+                                <li>Lập trình mô phỏng tương tác cao (p5.js).</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Trang: Bài tập 1 -->
+            <!-- ================= BÀI TẬP CƠ BẢN ================= -->
+            
+            <!-- BT 1.1 -->
+            <div id="page-basic-1-1" class="page-content space-y-6">
+                <div class="flex justify-between items-center mb-4"><h2 class="text-3xl font-bold text-slate-800">BT 1.1: Thiết kế video (Mục tiêu SMART)</h2><a href="#" class="print-exercise-button p-2 bg-white/50 rounded-lg text-xs font-bold">In bài</a></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <span class="phase-label">P1: Trải nghiệm</span>
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Vấn đề thực tiễn</h3>
+                    <p class="text-slate-700">Hãy thiết kế video về kiến thức khái niệm một cách sinh động và hấp dẫn thu hút người học.</p>
+                </div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P2: Phản tư</span><h3 class="text-xl font-bold text-violet-700 mb-3">Phân tích SMART</h3><textarea id="bt1-1-smart-goal" class="answer-box" rows="3" placeholder="Mục tiêu video SMART..."></textarea><div class="text-right mt-2"><button class="gemini-btn glass-btn-orange py-2 px-4 rounded-lg text-sm font-bold text-white" data-task="smart-review" data-source="bt1-1-smart-goal">✨ AI Kiểm tra SMART</button></div></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P3: Khái quát hóa</span><h3 class="text-xl font-bold text-violet-700 mb-3">Kịch bản 3 phần</h3><div class="grid grid-cols-3 gap-2"><textarea class="answer-box" rows="4" placeholder="Mở đầu"></textarea><textarea class="answer-box" rows="4" placeholder="Nội dung"></textarea><textarea class="answer-box" rows="4" placeholder="Kết thúc"></textarea></div></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P4: Thử nghiệm</span><p class="text-slate-700">Link sản phẩm:</p><input type="text" class="answer-box bg-white/80"></div>
+            </div>
+            <!-- BT 1.2 -->
+            <div id="page-basic-1-2" class="page-content space-y-6">
+                <h2 class="text-3xl font-bold text-slate-800">BT 1.2: Thiết kế Áp phích (Trực quan)</h2>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P1: Trải nghiệm</span><h3 class="text-xl font-bold text-violet-700 mb-3">Thông điệp bị lãng quên</h3><p class="text-slate-700">Áp phích nhiều chữ, rối rắm.</p></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P2: Phản tư</span><h3 class="text-xl font-bold text-violet-700 mb-3">Nguyên tắc CRAP</h3><div class="grid grid-cols-2 gap-4"><textarea class="answer-box" rows="2" placeholder="Contrast (Tương phản)"></textarea><textarea class="answer-box" rows="2" placeholder="Repetition (Lặp lại)"></textarea><textarea class="answer-box" rows="2" placeholder="Alignment (Căn chỉnh)"></textarea><textarea class="answer-box" rows="2" placeholder="Proximity (Gần gũi)"></textarea></div></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P3: Khái quát hóa</span><h3 class="text-xl font-bold text-violet-700 mb-3">Phác thảo Bố cục</h3><textarea id="bt1-2-layout" class="answer-box" rows="4" placeholder="Mô tả bố cục..."></textarea><div class="text-right mt-2"><button class="gemini-btn glass-btn-teal py-2 px-4 rounded-lg text-sm font-bold text-white" data-task="design-layout" data-source="bt1-2-layout">✨ AI Gợi ý Bố cục</button></div></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P4: Thử nghiệm</span><p class="text-slate-700">Link Canva:</p><input type="text" class="answer-box bg-white/80"></div>
+            </div>
+            <!-- BT 1.3 -->
+            <div id="page-basic-1-3" class="page-content space-y-6">
+                <h2 class="text-3xl font-bold text-slate-800">BT 1.3: Tạo Animation</h2>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P1: Trải nghiệm</span><h3 class="text-xl font-bold text-violet-700 mb-3">Bài giảng một chiều</h3><p class="text-slate-700">Slide toàn chữ, học sinh thụ động.</p></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P2: Phản tư</span><h3 class="text-xl font-bold text-violet-700 mb-3">Kể chuyện</h3><textarea class="answer-box" rows="2" placeholder="Nhân vật chính..."></textarea><textarea class="answer-box" rows="2" placeholder="Xung đột..."></textarea></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P3: Khái quát hóa</span><h3 class="text-xl font-bold text-violet-700 mb-3">Sơ đồ Nhánh</h3><textarea id="bt1-3-story" class="answer-box" rows="4" placeholder="Mô tả các nhánh rẽ..."></textarea><div class="text-right mt-2"><button class="gemini-btn glass-btn-pink py-2 px-4 rounded-lg text-sm font-bold text-white" data-task="story-branch" data-source="bt1-3-story">✨ AI Gợi ý Nhánh</button></div></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P4: Thử nghiệm</span><p class="text-slate-700">Link kịch bản/slide:</p><input type="text" class="answer-box bg-white/80"></div>
+            </div>
+
+            <!-- BT 2.1 -->
+            <div id="page-basic-2-1" class="page-content space-y-6">
+                <h2 class="text-3xl font-bold text-slate-800">BT 2.1: Infographic (Đồ họa thông tin)</h2>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P1: Trải nghiệm</span><h3 class="text-xl font-bold text-violet-700 mb-3">Thông tin rời rạc</h3><p class="text-slate-700">Dữ liệu biến đổi khí hậu phân mảnh.</p></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P2: Phản tư</span><h3 class="text-xl font-bold text-violet-700 mb-3">Đánh giá Nguồn tin</h3><textarea class="answer-box" rows="3" placeholder="3 nguồn uy tín..."></textarea><div class="text-right mt-2"><button class="gemini-btn glass-btn-teal py-2 px-4 rounded-lg text-sm font-bold text-white" data-task="source-eval">✨ AI Tiêu chí đánh giá</button></div></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P3: Khái quát hóa</span><h3 class="text-xl font-bold text-violet-700 mb-3">Kịch bản Đồ họa (Storyboard)</h3><textarea class="answer-box" rows="4" placeholder="Phác thảo nội dung..."></textarea></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P4: Thử nghiệm</span><p class="text-slate-700">Link Đồ họa thông tin (Infographic):</p><input type="text" class="answer-box bg-white/80"></div>
+            </div>
+            <!-- BT 2.2 -->
+            <div id="page-basic-2-2" class="page-content space-y-6">
+                <h2 class="text-3xl font-bold text-slate-800">BT 2.2: Biên tập Video (Lồng tiếng)</h2>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P1: Trải nghiệm</span><h3 class="text-xl font-bold text-violet-700 mb-3">Rào cản ngôn ngữ</h3><p class="text-slate-700">Video hay nhưng tiếng Anh.</p></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P2: Phản tư</span><h3 class="text-xl font-bold text-violet-700 mb-3">Phân tích & Dịch</h3><textarea id="bt2-2-transcript" class="answer-box" rows="3" placeholder="Nội dung gốc..."></textarea><div class="text-right mt-2"><button class="gemini-btn glass-btn-orange py-2 px-4 rounded-lg text-sm font-bold text-white" data-task="translate-script" data-source="bt2-2-transcript">✨ AI Hỗ trợ Dịch</button></div></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P3: Khái quát hóa</span><h3 class="text-xl font-bold text-violet-700 mb-3">Kịch bản Lồng tiếng</h3><textarea class="answer-box" rows="4" placeholder="Lời bình mới..."></textarea></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P4: Thử nghiệm</span><p class="text-slate-700">Link video đã biên tập:</p><input type="text" class="answer-box bg-white/80"></div>
+            </div>
+            <!-- BT 2.3 -->
+            <div id="page-basic-2-3" class="page-content space-y-6">
+                <h2 class="text-3xl font-bold text-slate-800">BT 2.3: Sách điện tử (E-book)</h2>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P1: Trải nghiệm</span><h3 class="text-xl font-bold text-violet-700 mb-3">Tài liệu khô khan</h3><p class="text-slate-700">File Word dài toàn chữ.</p></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P2: Phản tư</span><h3 class="text-xl font-bold text-violet-700 mb-3">Đa phương tiện</h3><div class="grid grid-cols-2 gap-2"><label><input type="checkbox" class="mr-2"> Video</label><label><input type="checkbox" class="mr-2"> Âm thanh (Audio)</label><label><input type="checkbox" class="mr-2"> Câu hỏi (Quiz)</label><label><input type="checkbox" class="mr-2"> Ảnh động (GIF)</label></div></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P3: Khái quát hóa</span><h3 class="text-xl font-bold text-violet-700 mb-3">Cấu trúc Sách điện tử</h3><textarea id="bt2-3-ebook" class="answer-box" rows="4" placeholder="Dàn ý 5 trang..."></textarea><div class="text-right mt-2"><button class="gemini-btn glass-btn-pink py-2 px-4 rounded-lg text-sm font-bold text-white" data-task="ebook-structure" data-source="bt2-3-ebook">✨ AI Gợi ý Cấu trúc</button></div></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P4: Thử nghiệm</span><p class="text-slate-700">Link Sách điện tử:</p><input type="text" class="answer-box bg-white/80"></div>
+            </div>
+            <!-- BT 2.4 -->
+            <div id="page-basic-2-4" class="page-content space-y-6">
+                <h2 class="text-3xl font-bold text-slate-800">BT 2.4: Hành trình số (Truy tìm kiến thức)</h2>
+                <div class="glass-panel tilt-card p-6 rounded-2xl">
+                    <span class="phase-label">P1: Trải nghiệm</span>
+                    <h3 class="text-xl font-bold text-violet-700 mb-3">Lạc lối thông tin</h3>
+                    <p class="text-slate-700">Trước kì thi, có quá nhiều kiến thức cần phải ôn, HS không biết bắt đầu từ đâu. Bạn hãy tổng hợp các nội dung đã học thành một modun học tập giúp người học luyện tập theo chủ đề.</p>
+                </div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P2: Phản tư</span><h3 class="text-xl font-bold text-violet-700 mb-3">Giàn giáo (Scaffolding)</h3><textarea class="answer-box" rows="3" placeholder="Liệt kê nguồn tài liệu theo thứ tự..."></textarea></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P3: Khái quát hóa</span><h3 class="text-xl font-bold text-violet-700 mb-3">Thiết kế Nhiệm vụ</h3><textarea class="answer-box" rows="3" placeholder="Nhiệm vụ 1, 2, 3..."></textarea><div class="text-right mt-2"><button class="gemini-btn glass-btn-teal py-2 px-4 rounded-lg text-sm font-bold text-white" data-task="webquest-task">✨ AI Gợi ý Nhiệm vụ</button></div></div>
+                <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P4: Thử nghiệm</span><p class="text-slate-700">Link Bộ sưu tập (Collection):</p><input type="text" class="answer-box bg-white/80"></div>
+            </div>
+            <!-- BT 3 & 4 -->
+            <div id="page-basic-3" class="page-content space-y-6">
+                 <div class="flex justify-between items-center mb-4"><h2 class="text-3xl font-bold text-slate-800">BT 3: Bản quyền số</h2></div>
+                 <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P2: Phản tư</span><h3 class="text-xl font-bold text-violet-700 mb-3">Giấy phép Creative Commons</h3><div class="text-right"><button class="gemini-btn glass-btn-pink py-2 px-4 rounded-lg text-sm font-bold text-white" data-task="cc-explain">✨ AI Giải thích CC</button></div></div>
+                 <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P4: Thử nghiệm</span><p class="text-slate-700">Bộ sưu tập tài nguyên sạch:</p><input type="text" class="answer-box bg-white/80"></div>
+            </div>
+            <div id="page-basic-4" class="page-content space-y-6">
+                 <div class="flex justify-between items-center mb-4"><h2 class="text-3xl font-bold text-slate-800">BT 4: Tư duy Lập trình</h2></div>
+                 <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P2: Phản tư</span><h3 class="text-xl font-bold text-violet-700 mb-3">Thuật toán chấm điểm</h3><div class="text-right"><button class="gemini-btn glass-btn py-2 px-4 rounded-lg text-sm font-bold text-white" data-task="algo-logic">✨ AI Gợi ý Logic</button></div></div>
+                 <div class="glass-panel tilt-card p-6 rounded-2xl"><span class="phase-label">P4: Thử nghiệm</span><p class="text-slate-700">Link Quiz tự động:</p><input type="text" class="answer-box bg-white/80"></div>
+            </div>
+
+
+            <!-- ================= BÀI TẬP NÂNG CAO (ĐÃ KHÔI PHỤC) ================= -->
+
+            <!-- Bài tập Nâng cao 1: E-learning -->
             <div id="page-bt1" class="page-content space-y-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-3xl font-bold text-slate-800 drop-shadow-sm">Bài tập 1: Phát triển NDS</h2>
+                    <h2 class="text-3xl font-bold text-slate-800 drop-shadow-sm">BT Nâng cao 1: Phát triển E-learning</h2>
                     <a href="#" class="print-exercise-button p-3 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-center shadow-lg hover:shadow-emerald-300/50 transition-all duration-200 hover:-translate-y-0.5">
                         In Bài 1 / Xuất PDF
                     </a>
@@ -462,10 +552,10 @@
                 </div>
             </div>
 
-            <!-- Trang: Bài tập 2 -->
+            <!-- Bài tập Nâng cao 2: Tích hợp & Tái lập -->
             <div id="page-bt2" class="page-content space-y-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-3xl font-bold text-slate-800 drop-shadow-sm">Bài tập 2: Tích hợp & Tái lập</h2>
+                    <h2 class="text-3xl font-bold text-slate-800 drop-shadow-sm">BT Nâng cao 2: Tích hợp & Tái lập</h2>
                     <a href="#" class="print-exercise-button p-3 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-center shadow-lg hover:shadow-emerald-300/50 transition-all duration-200 hover:-translate-y-0.5">
                         In Bài 2 / Xuất PDF
                     </a>
@@ -600,10 +690,10 @@
                 </div>
             </div>
 
-            <!-- Trang: Bài tập 3 -->
+            <!-- Bài tập Nâng cao 3: Lập trình -->
             <div id="page-bt3" class="page-content space-y-6">
                 <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-3xl font-bold text-slate-800 drop-shadow-sm">Bài tập 3: Lập trình</h2>
+                    <h2 class="text-3xl font-bold text-slate-800 drop-shadow-sm">BT Nâng cao 3: Lập trình Mô phỏng</h2>
                     <a href="#" class="print-exercise-button p-3 rounded-xl text-sm font-bold bg-gradient-to-r from-emerald-400 to-teal-500 text-white text-center shadow-lg hover:shadow-emerald-300/50 transition-all duration-200 hover:-translate-y-0.5">
                         In Bài 3 / Xuất PDF
                     </a>
@@ -700,103 +790,64 @@
         </main>
     </div>
 
-    <!-- Modal cho Tính năng Gemini (Glass Style) -->
+    <!-- Modal cho Tính năng Gemini -->
     <div id="gemini-modal" class="modal-overlay">
         <div class="modal-content">
-            <!-- Header -->
             <div class="modal-header">
                 <h3 id="gemini-modal-title" class="modal-title">Kết quả từ Gemini</h3>
-                <button id="gemini-modal-close" class="text-slate-400 hover:text-slate-600 focus:outline-none transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
+                <button id="gemini-modal-close" class="text-slate-400 hover:text-slate-600 focus:outline-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
             </div>
-            <!-- Body -->
             <div id="gemini-modal-body-content" class="modal-body-container">
-                <div class="flex justify-center items-center h-24">
-                    <div class="modal-spinner"></div>
-                </div>
+                <div class="flex justify-center items-center h-24"><div class="modal-spinner"></div></div>
             </div>
-            <!-- Footer -->
             <div class="modal-footer">
-                <button id="gemini-modal-close-footer" class="px-5 py-2 bg-slate-200/80 text-slate-700 rounded-lg font-medium hover:bg-slate-300 transition-colors duration-200 backdrop-blur-sm">
-                    Đóng
-                </button>
+                <button id="gemini-modal-close-footer" class="px-5 py-2 bg-slate-200/80 text-slate-700 rounded-lg font-medium hover:bg-slate-300">Đóng</button>
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // --- Navigation Logic ---
             const navLinks = document.querySelectorAll('.nav-link');
             const pages = document.querySelectorAll('.page-content');
 
-            // Hàm để hiển thị trang và cập nhật link active
             function showPage(targetId) {
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
+                pages.forEach(page => page.classList.remove('active'));
                 const targetPage = document.getElementById(targetId);
-                if (targetPage) {
-                    targetPage.classList.add('active');
-                }
+                if (targetPage) targetPage.classList.add('active');
+                
                 navLinks.forEach(link => {
                     link.classList.remove('active');
-                    if (link.dataset.target === targetId) {
-                        link.classList.add('active');
-                    }
+                    if (link.dataset.target === targetId) link.classList.add('active');
                 });
             }
 
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const targetId = e.currentTarget.dataset.target;
-                    showPage(targetId);
+                    showPage(e.currentTarget.dataset.target);
                 });
             });
 
-            showPage('page-home');
-
-            // --- Logic cho Bài tập 2 ---
+            // --- Logic cho nút Radio ở Bài tập Nâng cao 2 (Giản lược) ---
             const q1Radios = document.querySelectorAll('input[name="hoc-lieu-type"]');
-            const q2aRadio = document.getElementById('q2-a-flipbook');
-            const q2aDetails = document.getElementById('q2-a-details');
-            const q2aLabel = document.querySelector('label[for="q2-a-flipbook"]');
-            const q2bRadio = document.getElementById('q2-b-website');
-            const q2bDetails = document.getElementById('q2-b-details');
-            const q2bLabel = document.querySelector('label[for="q2-b-website"]');
+            const q2aDiv = document.getElementById('q2-a-details');
+            const q2bDiv = document.getElementById('q2-b-details');
             
             q1Radios.forEach(radio => {
                 radio.addEventListener('change', (e) => {
-                    const selectedValue = e.target.value;
-                    if (selectedValue === 'flipbook') {
-                        q2aRadio.disabled = false; q2aRadio.checked = true;
-                        q2aLabel.classList.remove('cursor-not-allowed', 'text-gray-500');
-                        q2aDetails.classList.remove('hidden');
-                        q2bRadio.disabled = true; q2bRadio.checked = false;
-                        q2bLabel.classList.add('cursor-not-allowed', 'text-gray-500');
-                        q2bDetails.classList.add('hidden');
-                    } else if (selectedValue === 'website') {
-                        q2bRadio.disabled = false; q2bRadio.checked = true;
-                        q2bLabel.classList.remove('cursor-not-allowed', 'text-gray-500');
-                        q2bDetails.classList.remove('hidden');
-                        q2aRadio.disabled = true; q2aRadio.checked = false;
-                        q2aLabel.classList.add('cursor-not-allowed', 'text-gray-500');
-                        q2aDetails.classList.add('hidden');
+                    if (e.target.value === 'flipbook') {
+                        if(q2aDiv) q2aDiv.classList.remove('hidden');
+                        if(q2bDiv) q2bDiv.classList.add('hidden');
+                    } else {
+                        if(q2aDiv) q2aDiv.classList.add('hidden');
+                        if(q2bDiv) q2bDiv.classList.remove('hidden');
                     }
                 });
             });
-            
-            // --- Logic cho nút In ---
-            const printButtons = document.querySelectorAll('.print-exercise-button');
-            printButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    window.print();
-                });
-            });
 
-            // --- LOGIC TÍCH HỢP GEMINI API ---
+            // --- Gemini API Logic ---
             const modal = document.getElementById('gemini-modal');
             const modalCloseBtn = document.getElementById('gemini-modal-close');
             const modalCloseFooterBtn = document.getElementById('gemini-modal-close-footer');
@@ -804,184 +855,118 @@
             const modalBody = document.getElementById('gemini-modal-body-content');
             const spinnerHTML = `<div class="flex justify-center items-center h-24"><div class="modal-spinner"></div></div>`;
 
-            function simpleMarkdownParser(text) {
-                if (!text) return '';
-                let html = text;
-                html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-                html = html.replace(/^## (.*$)/gim, '<h3>$1</h3>');
-                html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>');
-                html = html.replace(/^\* (.*$)/gim, '<ul><li>$1</li></ul>');
-                html = html.replace(/^- (.*$)/gim, '<ul><li>$1</li></ul>');
-                html = html.replace(/<\/ul>\s*<ul>/gim, '');
-                html = html.replace(/\n/gim, '<br>');
-                return `<div class="markdown-content modal-body-text">${html}</div>`;
-            }
-
             function openModal(title) {
                 modalTitle.textContent = title;
                 modalBody.innerHTML = spinnerHTML;
                 modal.classList.add('active');
             }
-
-            function closeModal() {
-                modal.classList.remove('active');
-            }
+            function closeModal() { modal.classList.remove('active'); }
             
             modalCloseBtn.addEventListener('click', closeModal);
-            if(modalCloseFooterBtn) modalCloseFooterBtn.addEventListener('click', closeModal);
+            modalCloseFooterBtn.addEventListener('click', closeModal);
             modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-            async function callGeminiAPI(userPrompt, systemPrompt = "", maxRetries = 3) {
+            function simpleMarkdownParser(text) {
+                if (!text) return '';
+                let html = text.replace(/^### (.*$)/gim, '<h3>$1</h3>').replace(/^## (.*$)/gim, '<h3>$1</h3>')
+                    .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>').replace(/^\* (.*$)/gim, '<ul><li>$1</li></ul>')
+                    .replace(/^- (.*$)/gim, '<ul><li>$1</li></ul>').replace(/<\/ul>\s*<ul>/gim, '').replace(/\n/gim, '<br>');
+                return `<div class="markdown-content modal-body-text">${html}</div>`;
+            }
+
+            async function callGeminiAPI(userPrompt, systemPrompt = "") {
                 const apiKey = ""; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
                 const payload = { contents: [{ parts: [{ text: userPrompt }] }], systemInstruction: systemPrompt ? { parts: [{ text: systemPrompt }] } : undefined };
+                try {
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    const result = await response.json();
+                    return { text: simpleMarkdownParser(result.candidates?.[0]?.content?.parts?.[0]?.text) };
+                } catch (error) { return { error: "Lỗi kết nối API." }; }
+            }
 
-                let attempt = 0; let delay = 1000;
-                while (attempt < maxRetries) {
-                    try {
-                        const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-                        if (!response.ok) { const errorResult = await response.json(); return { error: `Lỗi API: ${errorResult.error?.message || response.statusText}` }; }
-                        const result = await response.json();
-                        const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                        if (text) return { text: simpleMarkdownParser(text) };
-                        else return { error: "Không nhận được nội dung hợp lệ từ API." };
-                    } catch (error) {
-                        attempt++; if (attempt >= maxRetries) return { error: `Đã hết số lần thử. Lỗi cuối cùng: ${error.message}` };
-                        await new Promise(resolve => setTimeout(resolve, delay)); delay *= 2;
+            // --- Handlers cho các nút Gemini Mới (Bài tập Cơ bản - Cập nhật) ---
+            document.querySelectorAll('.gemini-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const task = e.target.dataset.task;
+                    const sourceId = e.target.dataset.source;
+                    let sourceVal = sourceId ? document.getElementById(sourceId).value : "";
+                    
+                    let prompt = "", title = "", sysPrompt = "Bạn là trợ lý giáo dục kỹ thuật số.";
+
+                    if (task === 'smart-review') {
+                        if (!sourceVal) { alert('Vui lòng nhập mục tiêu.'); return; }
+                        prompt = `Phân tích mục tiêu SMART: "${sourceVal}".`;
+                        title = "🎯 AI Check SMART";
+                        sysPrompt = "Chuyên gia sư phạm.";
+                    } 
+                    else if (task === 'design-layout') {
+                        if (!sourceVal) sourceVal = "Chưa có mô tả.";
+                        prompt = `Gợi ý cải thiện bố cục Poster dựa trên mô tả: "${sourceVal}". Áp dụng nguyên tắc Contrast, Repetition, Alignment, Proximity.`;
+                        title = "🎨 Gợi ý Bố cục Poster";
+                        sysPrompt = "Designer chuyên nghiệp.";
                     }
-                }
-                return { error: "Đã xảy ra lỗi không xác định." };
-            }
+                    else if (task === 'story-branch') {
+                         if (!sourceVal) sourceVal = "Chưa có cốt truyện.";
+                         prompt = `Xây dựng 2 nhánh rẽ kịch bản thú vị cho cốt truyện sau: "${sourceVal}".`;
+                         title = "🔀 Gợi ý Nhánh truyện";
+                         sysPrompt = "Biên kịch game giáo dục.";
+                    }
+                    else if (task === 'translate-script') {
+                         if (!sourceVal) sourceVal = "Chưa có nội dung.";
+                         prompt = `Dịch và viết lại lời bình cho đoạn nội dung video sau sao cho tự nhiên, phù hợp học sinh Việt Nam: "${sourceVal}"`;
+                         title = "🎙️ Kịch bản Lồng tiếng";
+                         sysPrompt = "Biên tập viên truyền hình.";
+                    }
+                    else if (task === 'ebook-structure') {
+                         if (!sourceVal) sourceVal = "Chưa có dàn ý.";
+                         prompt = `Gợi ý cách sắp xếp các yếu tố đa phương tiện (Video, Audio, Quiz) vào E-book dựa trên dàn ý: "${sourceVal}" để tăng tương tác.`;
+                         title = "📚 Cấu trúc E-book";
+                    }
+                    else if (task === 'webquest-task') {
+                         prompt = `Gợi ý 3 nhiệm vụ WebQuest (Truy tìm kho báu kiến thức) thú vị cho chủ đề 'Lịch sử địa phương' hoặc chủ đề người dùng đang quan tâm.`;
+                         title = "🗺️ Nhiệm vụ WebQuest";
+                    }
+                    else if (task === 'source-eval') {
+                        prompt = "Checklist 5 tiêu chí đánh giá nguồn tin uy tín (CRAAP test).";
+                        title = "✅ Tiêu chí Đánh giá";
+                    }
+                    else if (task === 'cc-explain') prompt = "Giải thích các loại giấy phép Creative Commons.";
+                    else if (task === 'algo-logic') prompt = "Lưu đồ thuật toán chấm điểm tự động.";
 
-            // --- Event Listeners Gemini (Cũ) ---
-            const suggestPlanBtn = document.getElementById('gemini-suggest-plan-btn');
-            if (suggestPlanBtn) {
-                suggestPlanBtn.addEventListener('click', async () => {
-                    const topic = document.getElementById('bt1-q1-answer').value;
-                    if (!topic.trim()) { alert("Vui lòng nhập Mục tiêu/Chủ đề (Phần 2, Câu 1) trước."); return; }
-                    openModal("Đang tạo gợi ý kế hoạch...");
-                    const systemPrompt = "Bạn là chuyên gia thiết kế E-learning.";
-                    const userPrompt = `Lập kế hoạch E-learning 5 bước cho chủ đề: "${topic}". Dùng định dạng Markdown đơn giản.`;
-                    const result = await callGeminiAPI(userPrompt, systemPrompt);
-                    modalTitle.textContent = result.error ? "Lỗi" : "✨ Gợi ý Kế hoạch E-learning";
-                    modalBody.innerHTML = result.error || result.text;
+                    openModal(title);
+                    const res = await callGeminiAPI(prompt, sysPrompt);
+                    modalBody.innerHTML = res.error || res.text;
                 });
-            }
+            });
 
-            const generateQuizBtn = document.getElementById('gemini-generate-quiz-btn');
-            if (generateQuizBtn) {
-                generateQuizBtn.addEventListener('click', async () => {
-                    const topic = document.getElementById('bt1-q1-answer').value;
-                    if (!topic.trim()) { alert("Vui lòng nhập Mục tiêu/Chủ đề (Phần 2, Câu 1) trước."); return; }
-                    openModal("Đang tạo câu hỏi Quiz...");
-                    const systemPrompt = "Bạn là giáo viên Sinh học.";
-                    const userPrompt = `Tạo 3 câu hỏi trắc nghiệm về chủ đề: "${topic}". Dùng định dạng Markdown.`;
-                    const result = await callGeminiAPI(userPrompt, systemPrompt);
-                    modalTitle.textContent = result.error ? "Lỗi" : "✨ Gợi ý 3 câu hỏi Quiz (H5P)";
-                    modalBody.innerHTML = result.error || result.text;
-                });
-            }
+            // --- Handlers cho các nút Gemini Cũ (Giữ nguyên logic) ---
+            const oldBtns = [
+                { id: 'gemini-review-goal-btn', prompt: (val) => `Nhận xét mục tiêu '${val}' theo tiêu chuẩn SMART.`, sys: "Giáo viên nghiêm khắc." },
+                { id: 'gemini-suggest-plan-btn', prompt: (val) => `Lập kế hoạch E-learning cho chủ đề '${val}'.`, sys: "Chuyên gia E-learning.", sourceId: 'bt1-q1-answer' },
+                { id: 'gemini-generate-quiz-btn', prompt: (val) => `Tạo 3 câu hỏi Quiz H5P chủ đề '${val}'.`, sys: "Giáo viên Sinh học.", sourceId: 'bt1-q1-answer' },
+                { id: 'gemini-improve-prompt-btn', prompt: (val) => `Cải thiện prompt code p5.js: '${val}'`, sys: "Kỹ sư AI.", sourceId: 'bt3-prompt-answer' },
+                { id: 'gemini-reflection-btn', prompt: () => "Dàn ý phản tư sư phạm dự án lập trình.", sys: "Giảng viên sư phạm." },
+                { id: 'gemini-idea-gen-btn', prompt: () => "Gợi ý ý tưởng tích hợp Sinh học bằng Flipbook/Website.", sys: "Chuyên gia sáng tạo." },
+                { id: 'gemini-tool-analysis-btn', prompt: () => "Phân tích ưu nhược điểm công cụ Flipbook/Website.", sys: "Chuyên gia EdTech." }
+            ];
 
-            const toolAnalysisBtn = document.getElementById('gemini-tool-analysis-btn');
-            if (toolAnalysisBtn) {
-                toolAnalysisBtn.addEventListener('click', async () => {
-                    let selectedTool = "";
-                    if (document.getElementById('q1-flipbook').checked) selectedTool = "Flipbook";
-                    else if (document.getElementById('q1-website').checked) selectedTool = "Website";
-                    else { alert("⚠️ Vui lòng chọn 'Flipbook' hoặc 'Website' ở Câu 1 trước."); return; }
-                    openModal("Đang phân tích công cụ...");
-                    const systemPrompt = "Bạn là chuyên gia EdTech.";
-                    const userPrompt = `Phân tích Ưu/Nhược điểm của "${selectedTool}" trong dạy học Sinh học. Dùng Markdown.`;
-                    const result = await callGeminiAPI(userPrompt, systemPrompt);
-                    modalTitle.textContent = result.error ? "Lỗi" : `✨ Phân tích: ${selectedTool}`;
-                    modalBody.innerHTML = result.error || result.text;
-                });
-            }
-
-            const improvePromptBtn = document.getElementById('gemini-improve-prompt-btn');
-            if (improvePromptBtn) {
-                improvePromptBtn.addEventListener('click', async () => {
-                    const userPromptText = document.getElementById('bt3-prompt-answer').value;
-                    if (!userPromptText.trim()) { alert("Vui lòng nhập nội dung prompt của bạn trước."); return; }
-                    openModal("Đang cải thiện prompt...");
-                    const systemPrompt = "Bạn là kỹ sư prompt AI.";
-                    const apiPrompt = `Cải thiện prompt sau để tạo code p5.js sinh học: "${userPromptText}". Trả lời bằng Markdown.`;
-                    const result = await callGeminiAPI(apiPrompt, systemPrompt);
-                    modalTitle.textContent = result.error ? "Lỗi" : "✨ Prompt đã được cải thiện";
-                    modalBody.innerHTML = result.error || result.text;
-                });
-            }
-
-            // --- CÁC TÍNH NĂNG MỚI (NEW GEMINI FEATURES) ---
-
-            // 1. Giáo viên ảo đánh giá mục tiêu (Bài tập 1)
-            const reviewGoalBtn = document.getElementById('gemini-review-goal-btn');
-            if (reviewGoalBtn) {
-                reviewGoalBtn.addEventListener('click', async () => {
-                    const goal = document.getElementById('bt1-q1-answer').value;
-                    if (!goal.trim()) { alert("Vui lòng nhập nội dung mục tiêu trước."); return; }
-                    
-                    openModal("Đang đánh giá mục tiêu...");
-                    const systemPrompt = "Bạn là một giáo viên Sinh học kỳ cựu và nghiêm khắc.";
-                    const userPrompt = `Học viên đưa ra mục tiêu bài học E-learning môn Sinh học lớp 10 như sau: "${goal}". 
-                    Hãy nhận xét xem mục tiêu này đã đạt tiêu chuẩn SMART chưa? Đưa ra 3 gạch đầu dòng ngắn gọn để góp ý cải thiện. Dùng định dạng Markdown.`;
-                    
-                    const result = await callGeminiAPI(userPrompt, systemPrompt);
-                    modalTitle.textContent = result.error ? "Lỗi" : "✨ Nhận xét của Giáo viên";
-                    modalBody.innerHTML = result.error || result.text;
-                });
-            }
-
-            // 2. Trợ lý Ý tưởng Sáng tạo (Bài tập 2)
-            const ideaGenBtn = document.getElementById('gemini-idea-gen-btn');
-            if (ideaGenBtn) {
-                ideaGenBtn.addEventListener('click', async () => {
-                    let toolType = "";
-                    if (document.getElementById('q1-flipbook').checked) toolType = "Flipbook (Sách tương tác)";
-                    else if (document.getElementById('q1-website').checked) toolType = "Website học tập";
-                    else { alert("⚠️ Vui lòng chọn loại học liệu (Flipbook hoặc Website) ở Câu 1 phía trên trước."); return; }
-
-                    openModal("Đang tìm ý tưởng sáng tạo...");
-                    const systemPrompt = "Bạn là một chuyên gia sáng tạo nội dung số.";
-                    const userPrompt = `Hãy gợi ý 3 ý tưởng dự án sáng tạo và thú vị dành cho học sinh THPT để tích hợp kiến thức 'Trao đổi chất' và 'Công nghệ sinh học', sử dụng công cụ là "${toolType}". Tập trung vào tính tương tác và khám phá. Dùng Markdown.`;
-
-                    const result = await callGeminiAPI(userPrompt, systemPrompt);
-                    modalTitle.textContent = result.error ? "Lỗi" : `✨ Gợi ý Ý tưởng: ${toolType}`;
-                    modalBody.innerHTML = result.error || result.text;
-                });
-            }
-
-            // 3. Hỗ trợ Viết Phản tư (Bài tập 3)
-            const reflectionBtn = document.getElementById('gemini-reflection-btn');
-            const reflectionArea = document.getElementById('bt3-reflection-area');
-            if (reflectionBtn) {
-                reflectionBtn.addEventListener('click', async () => {
-                    const githubLink = document.getElementById('bt3-github-link').value;
-                    // Không bắt buộc link github, nhưng dùng để context nếu có
-                    
-                    openModal("Đang soạn dàn ý phản tư...");
-                    const systemPrompt = "Bạn là một giảng viên hướng dẫn thực tập sư phạm.";
-                    const userPrompt = `Hãy soạn một dàn ý chi tiết (outline) để viết đoạn phản tư sư phạm cho một dự án lập trình mô phỏng sinh học (DNA replication). 
-                    Tập trung vào: 1. Khó khăn khi lập trình. 2. Cách công cụ số giúp HS phát triển năng lực STEM. 3. Bài học kinh nghiệm cho giáo viên.
-                    Trả lời bằng Markdown.`;
-
-                    const result = await callGeminiAPI(userPrompt, systemPrompt);
-                    
-                    if (!result.error) {
-                         // Tự động điền vào textarea nếu nó đang trống
-                        if (!reflectionArea.value.trim()) {
-                            // Chuyển đổi sơ bộ từ HTML sang text cho textarea (đơn giản hóa)
-                            const tempDiv = document.createElement("div");
-                            tempDiv.innerHTML = result.text;
-                            reflectionArea.value = tempDiv.innerText;
+            oldBtns.forEach(item => {
+                const btn = document.getElementById(item.id);
+                if (btn) {
+                    btn.addEventListener('click', async () => {
+                        let val = "";
+                        if (item.sourceId) {
+                            val = document.getElementById(item.sourceId)?.value;
+                            if (item.sourceId === 'bt1-q1-answer' && !val) { alert("Vui lòng nhập chủ đề trước."); return; }
                         }
-                    }
-
-                    modalTitle.textContent = result.error ? "Lỗi" : "✨ Dàn ý Phản tư Sư phạm";
-                    modalBody.innerHTML = result.error || result.text;
-                });
-            }
-
+                        openModal("Đang xử lý...");
+                        const promptText = typeof item.prompt === 'function' ? item.prompt(val) : item.prompt;
+                        const res = await callGeminiAPI(promptText, item.sys);
+                        modalBody.innerHTML = res.error || res.text;
+                    });
+                }
+            });
         });
     </script>
 </body>
