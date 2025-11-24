@@ -92,6 +92,14 @@
             opacity: 0.95;
         }
 
+        /* Nút màu cam đặc biệt cho tính năng mới */
+        .glass-btn-orange {
+            background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%);
+        }
+        .glass-btn-pink {
+            background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);
+        }
+
         /* Ẩn tất cả các trang nội dung theo mặc định */
         .page-content { 
             display: none; 
@@ -353,6 +361,12 @@
                         <div>
                             <p class="font-medium">1. Xác định mục tiêu nội dung/chủ đề cho bài giảng E – learning?</p>
                             <textarea id="bt1-q1-answer" class="answer-box" rows="3" placeholder="Nhập câu trả lời của bạn..."></textarea>
+                            <!-- TÍCH HỢP MỚI: ĐÁNH GIÁ MỤC TIÊU -->
+                            <div class="mt-2 text-right">
+                                <button type="button" id="gemini-review-goal-btn" class="glass-btn glass-btn-orange py-2 px-4 rounded-lg text-sm font-medium text-white shadow-md">
+                                    ✨ Nhận xét câu trả lời (với Gemini)
+                                </button>
+                            </div>
                         </div>
                         <p class="font-medium">2. Có thể áp dụng công cụ nào để nhận thấy e – learning góp phần nâng cao hiệu quả dạy học chủ đề đã chọn so với bài giảng truyền thống?</p>
                         <div class="ml-2 space-y-2 mt-2 p-3 rounded-xl bg-white/30">
@@ -570,6 +584,15 @@
                         Theo kế hoạch đã lập, thiết kế sản phẩm nội dung số tích hợp (Flipbook hoặc Website) và nộp lại link.
                     </p>
                     <div class="mt-4 p-4 bg-white/30 rounded-xl border border-white/40 space-y-3">
+                        
+                        <!-- TÍCH HỢP MỚI: Ý TƯỞNG SÁNG TẠO -->
+                        <div class="flex flex-col md:flex-row justify-between items-center bg-violet-50/50 p-4 rounded-lg border border-violet-100 mb-4">
+                            <span class="text-sm font-medium text-violet-800 mb-2 md:mb-0">Bạn đang bí ý tưởng cho sản phẩm?</span>
+                            <button type="button" id="gemini-idea-gen-btn" class="glass-btn glass-btn-pink py-2 px-4 rounded-lg text-sm font-medium text-white shadow-md">
+                                ✨ Gợi ý ý tưởng sản phẩm
+                            </button>
+                        </div>
+
                         <p class="text-slate-700 font-bold">Sản phẩm: Nộp lại 01 đường link (URL) sản phẩm hoàn chỉnh.</p>
                         <input type="text" class="answer-box bg-white/80" placeholder="Dán đường link (URL) sản phẩm của bạn tại đây...">
                         <textarea class="answer-box bg-white/80" rows="5" placeholder="Viết đoạn phản tư của bạn về sản phẩm..."></textarea>
@@ -659,8 +682,17 @@
                     
                     <div class="mt-6 p-4 bg-white/30 rounded-xl border border-white/40 space-y-3">
                         <p class="text-slate-700 font-bold">Sản phẩm: Nộp lại 01 link GitHub Pages (sản phẩm mẫu) VÀ 01 đoạn phản tư sư phạm.</p>
-                        <input type="text" class="answer-box bg-white/80" placeholder="Dán link GitHub Pages tại đây...">
-                        <textarea class="answer-box bg-white/80" rows="5" placeholder="Viết đoạn phản tư sư phạm của bạn tại đây..."></textarea>
+                        <input type="text" id="bt3-github-link" class="answer-box bg-white/80" placeholder="Dán link GitHub Pages tại đây...">
+                        
+                        <!-- TÍCH HỢP MỚI: HỖ TRỢ VIẾT PHẢN TƯ -->
+                        <div class="flex justify-end">
+                            <button type="button" id="gemini-reflection-btn" class="text-sm text-violet-600 font-semibold hover:text-violet-800 hover:underline flex items-center">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                ✨ Gợi ý dàn ý phản tư sư phạm
+                            </button>
+                        </div>
+
+                        <textarea id="bt3-reflection-area" class="answer-box bg-white/80" rows="5" placeholder="Viết đoạn phản tư sư phạm của bạn tại đây..."></textarea>
                     </div>
                 </div>
             </div>
@@ -821,7 +853,7 @@
                 return { error: "Đã xảy ra lỗi không xác định." };
             }
 
-            // Event Listeners Gemini
+            // --- Event Listeners Gemini (Cũ) ---
             const suggestPlanBtn = document.getElementById('gemini-suggest-plan-btn');
             if (suggestPlanBtn) {
                 suggestPlanBtn.addEventListener('click', async () => {
@@ -879,6 +911,77 @@
                     modalBody.innerHTML = result.error || result.text;
                 });
             }
+
+            // --- CÁC TÍNH NĂNG MỚI (NEW GEMINI FEATURES) ---
+
+            // 1. Giáo viên ảo đánh giá mục tiêu (Bài tập 1)
+            const reviewGoalBtn = document.getElementById('gemini-review-goal-btn');
+            if (reviewGoalBtn) {
+                reviewGoalBtn.addEventListener('click', async () => {
+                    const goal = document.getElementById('bt1-q1-answer').value;
+                    if (!goal.trim()) { alert("Vui lòng nhập nội dung mục tiêu trước."); return; }
+                    
+                    openModal("Đang đánh giá mục tiêu...");
+                    const systemPrompt = "Bạn là một giáo viên Sinh học kỳ cựu và nghiêm khắc.";
+                    const userPrompt = `Học viên đưa ra mục tiêu bài học E-learning môn Sinh học lớp 10 như sau: "${goal}". 
+                    Hãy nhận xét xem mục tiêu này đã đạt tiêu chuẩn SMART chưa? Đưa ra 3 gạch đầu dòng ngắn gọn để góp ý cải thiện. Dùng định dạng Markdown.`;
+                    
+                    const result = await callGeminiAPI(userPrompt, systemPrompt);
+                    modalTitle.textContent = result.error ? "Lỗi" : "✨ Nhận xét của Giáo viên";
+                    modalBody.innerHTML = result.error || result.text;
+                });
+            }
+
+            // 2. Trợ lý Ý tưởng Sáng tạo (Bài tập 2)
+            const ideaGenBtn = document.getElementById('gemini-idea-gen-btn');
+            if (ideaGenBtn) {
+                ideaGenBtn.addEventListener('click', async () => {
+                    let toolType = "";
+                    if (document.getElementById('q1-flipbook').checked) toolType = "Flipbook (Sách tương tác)";
+                    else if (document.getElementById('q1-website').checked) toolType = "Website học tập";
+                    else { alert("⚠️ Vui lòng chọn loại học liệu (Flipbook hoặc Website) ở Câu 1 phía trên trước."); return; }
+
+                    openModal("Đang tìm ý tưởng sáng tạo...");
+                    const systemPrompt = "Bạn là một chuyên gia sáng tạo nội dung số.";
+                    const userPrompt = `Hãy gợi ý 3 ý tưởng dự án sáng tạo và thú vị dành cho học sinh THPT để tích hợp kiến thức 'Trao đổi chất' và 'Công nghệ sinh học', sử dụng công cụ là "${toolType}". Tập trung vào tính tương tác và khám phá. Dùng Markdown.`;
+
+                    const result = await callGeminiAPI(userPrompt, systemPrompt);
+                    modalTitle.textContent = result.error ? "Lỗi" : `✨ Gợi ý Ý tưởng: ${toolType}`;
+                    modalBody.innerHTML = result.error || result.text;
+                });
+            }
+
+            // 3. Hỗ trợ Viết Phản tư (Bài tập 3)
+            const reflectionBtn = document.getElementById('gemini-reflection-btn');
+            const reflectionArea = document.getElementById('bt3-reflection-area');
+            if (reflectionBtn) {
+                reflectionBtn.addEventListener('click', async () => {
+                    const githubLink = document.getElementById('bt3-github-link').value;
+                    // Không bắt buộc link github, nhưng dùng để context nếu có
+                    
+                    openModal("Đang soạn dàn ý phản tư...");
+                    const systemPrompt = "Bạn là một giảng viên hướng dẫn thực tập sư phạm.";
+                    const userPrompt = `Hãy soạn một dàn ý chi tiết (outline) để viết đoạn phản tư sư phạm cho một dự án lập trình mô phỏng sinh học (DNA replication). 
+                    Tập trung vào: 1. Khó khăn khi lập trình. 2. Cách công cụ số giúp HS phát triển năng lực STEM. 3. Bài học kinh nghiệm cho giáo viên.
+                    Trả lời bằng Markdown.`;
+
+                    const result = await callGeminiAPI(userPrompt, systemPrompt);
+                    
+                    if (!result.error) {
+                         // Tự động điền vào textarea nếu nó đang trống
+                        if (!reflectionArea.value.trim()) {
+                            // Chuyển đổi sơ bộ từ HTML sang text cho textarea (đơn giản hóa)
+                            const tempDiv = document.createElement("div");
+                            tempDiv.innerHTML = result.text;
+                            reflectionArea.value = tempDiv.innerText;
+                        }
+                    }
+
+                    modalTitle.textContent = result.error ? "Lỗi" : "✨ Dàn ý Phản tư Sư phạm";
+                    modalBody.innerHTML = result.error || result.text;
+                });
+            }
+
         });
     </script>
 </body>
