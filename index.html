@@ -915,7 +915,7 @@
             }
 
             async function callGeminiAPI(userPrompt, systemPrompt = "") {
-                const apiKey = "AIzaSyD9Z30YMkOGILOHLjpOGmYqwX-6CntHnxI"; // ĐỂ CHẠY TRÊN GITHUB: Thay "" bằng "API_KEY_CUA_BAN" lấy từ https://aistudio.google.com/app/apikey
+                const apiKey = "AIzaSyCBDPufchgYbF1ndDhf_MKRcZzSRr0OPMc"; // ĐỂ CHẠY TRÊN GITHUB: Thay "" bằng "API_KEY_CUA_BAN" lấy từ https://aistudio.google.com/app/apikey
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
                 const payload = { contents: [{ parts: [{ text: userPrompt }] }], systemInstruction: systemPrompt ? { parts: [{ text: systemPrompt }] } : undefined };
                 
@@ -1040,4 +1040,5 @@
     </script>
 </body>
 </html>
+
 
