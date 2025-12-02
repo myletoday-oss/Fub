@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chiếc Khăn Nhiệm Màu – Giải Cứu Trái Đất Xanh 🌍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #A8E6CF, #DCEDC1);
+    overflow-x: hidden;
+  }
+
+  /* Start Screen */
+  #start-screen, #result-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+  }
+
+  h1 {
+    font-size: 2em;
+    color: #2b593f;
+    margin-bottom: 10px;
+  }
+
+  p.story {
+    font-size: 1.1em;
+    color: #444;
+    max-width: 600px;
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #FFAAA5;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #FF8C7A;
+    transform: scale(1.05);
+  }
+
+  /* Game Layout */
+  #game-container {
+    display: none;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #instruction {
+    background: rgba(255,255,255,0.8);
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #2b593f;
+    margin-bottom: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+
+  #tablecloth {
+    display: grid;
+    grid-template-areas:
+      "air . water"
+      ". center ."
+      "soil . noise";
+    gap: 20px;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .zone {
+    width: 200px;
+    height: 180px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    padding: 10px;
+    text-align: center;
+    transition: 0.3s;
+  }
+
+  .zone.completed {
+    background: #A8E6CF;
+    box-shadow: 0 0 20px #7ae7a1;
+  }
+
+  .zone textarea {
+    width: 90%;
+    height: 80px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    resize: none;
+    padding: 5px;
+  }
+
+  #center-zone {
+    grid-area: center;
+    background: #E0F7FA;
+    text-align: center;
+  }
+
+  #combine-btn {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #77dd77;
+  }
+
+  /* CHỈ SỬA Ở ĐÂY: Không ẩn nút nộp bài trong giai đoạn 2 */
+  #submit-solution-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 10px;
+  }
+
+  #earth-img {
+    width: 120px;
+    margin-bottom: 10px;
+    transition: filter 2s, transform 2s;
+    filter: grayscale(80%);
+  }
+
+  .clean-earth {
+    filter: grayscale(0%);
+    transform: rotate(360deg) scale(1.1);
+  }
+
+  /* Confetti leaves */
+  .leaf {
+    position: fixed;
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    from { top: -50px; transform: rotate(0deg); }
+    to { top: 100vh; transform: rotate(360deg); }
+  }
+
+  /* Result Screen */
+  #result-screen {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255,0.95);
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+  }
+
+  .definition-box {
+    background: #E8F5E9;
+    border-radius: 10px;
+    padding: 15px 25px;
+    margin-top: 15px;
+    max-width: 700px;
+  }
+</style>
+</head>
+<body>
+
+<!-- 🔹 Start Screen -->
+<div id="start-screen">
+  <h1>Chiếc Khăn Nhiệm Màu – Giải Cứu Trái Đất Xanh 🌍</h1>
+  <p class="story">Trái Đất đang bị ô nhiễm! Các Nhà Điều Tra Môi Trường hãy hợp sức cứu lấy hành tinh xanh!</p>
+  <button onclick="startGame()">Bắt đầu nhiệm vụ</button>
+  <div id="earth-ticker" style="margin-top:30px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/427/427735.png" width="80">
+  </div>
+</div>
+
+<!-- 🔹 Main Game -->
+<div id="game-container">
+  <div id="instruction">
+    <b>Hướng dẫn:</b> Hãy cùng đội của bạn viết ý kiến về các dạng ô nhiễm (Không khí, Nước, Đất, Âm thanh) ở bốn góc.
+    Sau đó, kết hợp năng lượng xanh và nêu biện pháp bảo vệ môi trường nhé!
+  </div>
+
+  <div id="tablecloth">
+    <div class="zone" id="air-zone" style="grid-area: air;">
+      💨 <b>Không khí</b><br>
+      <textarea placeholder="Viết ý kiến của bạn…"></textarea><br>
+      <button onclick="completeZone('air')">Hoàn thành</button>
+    </div>
+
+    <div class="zone" id="water-zone" style="grid-area: water;">
+      💧 <b>Nước</b><br>
+      <textarea placeholder="Viết ý kiến của bạn…"></textarea><br>
+      <button onclick="completeZone('water')">Hoàn thành</button>
+    </div>
+
+    <div class="zone" id="soil-zone" style="grid-area: soil;">
+      🌍 <b>Đất</b><br>
+      <textarea placeholder="Viết ý kiến của bạn…"></textarea><br>
+      <button onclick="completeZone('soil')">Hoàn thành</button>
+    </div>
+
+    <div class="zone" id="noise-zone" style="grid-area: noise;">
+      🔊 <b>Âm thanh</b><br>
+      <textarea placeholder="Viết ý kiến của bạn…"></textarea><br>
+      <button onclick="completeZone('noise')">Hoàn thành</button>
+    </div>
+
+    <div class="zone" id="center-zone">
+      <img id="earth-img" src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Earth">
+      <div id="combined-ideas"></div>
+      <button id="combine-btn" onclick="combineIdeas()">Kết hợp năng lượng xanh 🌿</button>
+      <div id="solution-phase" style="display:none;">
+        <p><b>Giai đoạn 2:</b> Hãy đề xuất biện pháp bảo vệ môi trường 🌱</p>
+        <textarea id="solution-text" placeholder="Viết biện pháp của nhóm..."></textarea><br>
+        <button id="submit-solution-btn" onclick="submitFinal()">Nộp bài</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🔹 Result Screen -->
+<div id="result-screen">
+  <h2>Kết quả nhiệm vụ</h2>
+  <p id="result-message"></p>
+  <div class="definition-box">
+    <b>Khái niệm:</b> Ô nhiễm môi trường là sự biến đổi tính chất vật lí, hóa học, sinh học của thành phần môi trường không phù hợp với quy chuẩn kĩ thuật môi trường, tiêu chuẩn môi trường gây ảnh hưởng xấu đến sức khoẻ con người, sinh vật và tự nhiên.
+  </div>
+  <button onclick="location.reload()">Chơi lại 🔁</button>
+</div>
+
+<!-- 🔊 Sounds -->
+<audio id="click-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_7c89d43a1d.mp3?filename=click-124467.mp3"></audio>
+<audio id="cheer-sound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_730c6b82e0.mp3?filename=success-1-6297.mp3"></audio>
+
+<script>
+let completed = {air:false, water:false, soil:false, noise:false};
+
+function startGame(){
+  document.getElementById("start-screen").style.display = "none";
+  document.getElementById("game-container").style.display = "flex";
+}
+
+function completeZone(zone){
+  document.getElementById("click-sound").play();
+  const z = document.getElementById(zone+"-zone");
+  z.classList.add("completed");
+  z.querySelector("button").disabled = true;
+  completed[zone] = true;
+  if(Object.values(completed).every(v => v)) {
+    document.getElementById("combine-btn").style.display = "inline-block";
+  }
+}
+
+// Khi kết hợp năng lượng xanh
+function combineIdeas(){
+  document.getElementById("click-sound").play();
+  const ideas = [];
+  for(let z in completed){
+    const text = document.getElementById(z+"-zone").querySelector("textarea").value.trim();
+    ideas.push(text);
+  }
+  const combinedDiv = document.getElementById("combined-ideas");
+  combinedDiv.innerHTML = "<b>Ý kiến nhóm:</b><br>" + ideas.join("<br>➡️ ");
+  document.getElementById("earth-img").classList.add("clean-earth");
+
+  // Hiện giai đoạn 2
+  document.getElementById("combine-btn").style.display = "none";
+  setTimeout(()=>{ 
+    document.getElementById("solution-phase").style.display = "block"; 
+  }, 2000);
+}
+
+// Nộp bài - chấm điểm
+function submitFinal(){
+  const solution = document.getElementById("solution-text").value.trim();
+  const allIdeas = [...document.querySelectorAll("textarea")].map(t=>t.value).join(" ").toLowerCase();
+
+  const fullText = (allIdeas + " " + solution).toLowerCase();
+
+  const keywords = [
+    "rác", "rác thải", "khói", "bụi", "bụi bẩn",
+    "nước bẩn", "nước thải", "ô nhiễm", "ảnh hưởng",
+    "con người", "thiên nhiên", "môi trường"
+  ];
+
+  let score = 0;
+  keywords.forEach(k => { if(fullText.includes(k)) score += 10; });
+  if(score > 100) score = 100;
+
+  showResult(score);
+}
+
+// Hiển thị kết quả
+function showResult(score){
+  document.getElementById("result-screen").style.display = "flex";
+  let msg = "";
+  if(score >= 80){
+    msg = "🟢 Tuyệt vời! Trái Đất hồi sinh rực rỡ!";
+    document.getElementById("cheer-sound").play();
+    launchConfetti();
+  } else if(score >= 50){
+    msg = "🟡 Trái Đất đang được cứu, cố gắng thêm nhé!";
+  } else {
+    msg = "🔴 Trái Đất vẫn đang nguy cấp, hãy điều tra lại!";
+  }
+  document.getElementById("result-message").innerText = msg;
+}
+
+// Confetti xanh lá cây
+function launchConfetti(){
+  for(let i=0;i<40;i++){
+    const leaf = document.createElement('div');
+    leaf.classList.add('leaf');
+    leaf.style.backgroundImage = "url('https://cdn-icons-png.flaticon.com/512/2909/2909765.png')";
+    leaf.style.left = Math.random()*window.innerWidth + 'px';
+    leaf.style.animationDuration = (4 + Math.random()*3) + 's';
+    document.body.appendChild(leaf);
+    setTimeout(()=>leaf.remove(),8000);
+  }
+}
+</script>
+</body>
+</html>
